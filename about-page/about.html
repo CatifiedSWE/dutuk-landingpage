@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dutuk | The Bridge - Connecting Two Worlds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Locomotive Scroll -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dutuk: {
+                            maroon: "#800000",
+                            charcoal: "#1A1A1A",
+                            beige: "#FDFBF7",
+                            alabaster: "#F7F3EE"
+                        }
+                    },
+                    fontFamily: {
+                        display: ["'Playfair Display'", "serif"],
+                        sans: ["'Inter'", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'luxury': '0 20px 60px -15px rgba(128, 0, 0, 0.08)',
+                        'ethereal': '0 30px 100px -20px rgba(0, 0, 0, 0.02)',
+                        'bubble': '0 10px 40px -10px rgba(128, 0, 0, 0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translateZ(0);
+        }
+
+        .luxury-nav {
+            background: rgba(253, 251, 247, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(128, 0, 0, 0.03);
+        }
+
+        .serif-italic {
+            font-style: italic;
+        }
+
+        /* Floating Bubble Component */
+        .bubble-card {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.07), 0 2px 10px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 18px;
+            text-align: center;
+            user-select: none;
+            cursor: default;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+            flex-shrink: 0;
+            will-change: transform;
+        }
+
+        .bubble-card:hover {
+            transform: translateY(-4px) scale(1.04) !important;
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .bubble-card span {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #2c2c2c;
+            line-height: 1.5;
+        }
+
+        .bubble-card--sm {
+            width: 108px;
+            height: 108px;
+        }
+
+
+        /* The Bridge Visual */
+        .bridge-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .hero-split {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .chaos-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #800000;
+            border-radius: 50%;
+            opacity: 0.1;
+            will-change: transform;
+        }
+
+        /* ── Mobile performance optimizations ── */
+        @media (max-width: 1023px) {
+
+            /* Hide noise overlay — saves a full-viewport compositing layer */
+            .noise {
+                display: none;
+            }
+
+            /* Replace expensive backdrop-filter with solid bg */
+            .luxury-nav {
+                background: rgba(253, 251, 247, 0.97);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+
+            /* Hide chaos dots on mobile */
+            .chaos-dot {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-dutuk-beige text-dutuk-charcoal font-sans antialiased overflow-x-hidden" data-scroll-container>
+    <div class="noise"></div>
+
+    <!-- Header / Navbar -->
+    <nav id="navbar"
+        class="fixed top-0 left-0 w-full z-50 luxury-nav py-6 px-8 md:px-20 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <div
+                class="w-12 h-12 bg-dutuk-maroon rounded-full flex items-center justify-center shadow-lg shadow-maroon/10">
+                <span class="text-white font-display font-bold text-xl italic leading-none">D</span>
+            </div>
+            <span class="font-display font-bold text-2xl tracking-tight">Dutuk</span>
+        </div>
+        <div
+            class="hidden md:flex items-center gap-12 font-medium text-[10px] uppercase tracking-[0.3em] text-dutuk-charcoal/40">
+            <a href="#" class="hover:text-dutuk-maroon transition-colors tracking-widest">The Pain</a>
+            <a href="#" class="hover:text-dutuk-maroon transition-colors tracking-widest">The Chaos</a>
+            <a href="#" class="hover:text-dutuk-maroon transition-colors tracking-widest">The Bridge</a>
+        </div>
+        <a href="https://dutuk.com"
+            class="px-10 py-3 bg-dutuk-maroon text-white rounded-full font-bold text-xs uppercase tracking-widest hover:bg-dutuk-charcoal transition-all duration-500 shadow-luxury">Visit
+            Dutuk</a>
+    </nav>
+
+    <!-- Phase 1: The Vendor's Pain (Hero) -->
+    <section class="min-h-[80vh] flex items-center justify-center px-6 pt-40 pb-20 relative overflow-hidden">
+        <div class="max-w-4xl w-full text-center z-10">
+            <div
+                class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-maroon/[0.03] text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.4em] mb-10 rounded-full border border-dutuk-maroon/5">
+                Stage 01: The Vendor Reality
+            </div>
+            <h1 id="vendor-headline"
+                class="font-display text-6xl md:text-8xl font-normal leading-tight mb-10 tracking-tighter">
+                Struggling to get <br>
+                <span class="serif-italic text-dutuk-maroon">new orders?</span>
+            </h1>
+            <div id="vendor-subtext"
+                class="text-xl md:text-2xl font-light text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed space-y-6">
+                <p>Most vendors wait for phone calls that never come. They rely on "WhatsApp Status" and referral luck.
+                </p>
+                <p class="text-dutuk-charcoal font-medium italic">They have the skill. They just don't have the stage.
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="#chaos-section"
+                    class="px-12 py-5 bg-dutuk-maroon text-white rounded-full font-display font-bold text-xl hover:bg-dutuk-charcoal transition-all duration-700 shadow-luxury">Show
+                    me the Solution</a>
+            </div>
+        </div>
+
+        <!-- Chaos Dots Background -->
+        <div id="dots-container" class="absolute inset-0 pointer-events-none"></div>
+    </section>
+
+    <!-- Phase 2: The User's Chaos (Pinned Snap Scroll) -->
+    <section id="chaos-pin-container" class="relative bg-dutuk-alabaster lg:h-[300vh]">
+        <div id="chaos-section"
+            class="lg:sticky lg:top-0 lg:h-screen flex flex-col items-center justify-center lg:overflow-hidden px-6 py-10 min-h-screen">
+
+            <!-- Stage label -->
+            <div id="chaos-header" class="text-center mb-10 relative z-30"
+                style="opacity: 0; transform: translateY(40px);">
+                <div
+                    class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-charcoal/5 text-dutuk-charcoal text-[10px] font-bold uppercase tracking-[0.4em] rounded-full">
+                    Stage 02: The Client Struggle
+                </div>
+            </div>
+
+            <!-- 3-col layout -->
+            <div
+                class="relative z-30 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[220px_1fr_220px] xl:grid-cols-[260px_1fr_260px] gap-6 xl:gap-12 items-center">
+
+                <!-- Left bubbles -->
+                <div class="hidden lg:flex flex-col gap-5 items-end">
+                    <div class="bubble-card" style="opacity:0;transform:scale(0.7) translateX(-24px);">
+                        <svg width="24" height="24" fill="none" stroke="#800000" stroke-width="1.8" viewBox="0 0 24 24">
+                            <line x1="12" y1="1" x2="12" y2="23" stroke-linecap="round" />
+                            <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke-linecap="round" />
+                        </svg>
+                        <span>Zero Pricing<br>Transparency</span>
+                    </div>
+                    <div class="bubble-card" style="opacity:0;transform:scale(0.7) translateX(-24px);">
+                        <svg width="24" height="24" fill="none" stroke="#800000" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-linecap="round" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-linecap="round" />
+                        </svg>
+                        <span>Biased Vendor<br>Referrals</span>
+                    </div>
+                    <div class="bubble-card bubble-card--sm" style="opacity:0;transform:scale(0.7) translateX(-24px);">
+                        <svg width="22" height="22" fill="none" stroke="#800000" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <span>Who Can<br>Be Trusted?</span>
+                    </div>
+                </div>
+
+                <!-- Center: heading + desc -->
+                <div class="text-center">
+                    <div id="chaos-header-text" style="opacity:0;transform:translateY(30px);">
+                        <h2 class="font-display text-5xl md:text-7xl font-normal leading-[1.1] tracking-tight">
+                            For the client, planning <br>
+                            is a <span class="serif-italic">mountain of stress.</span>
+                        </h2>
+                    </div>
+                    <div id="chaos-desc" class="mt-6" style="opacity:0;transform:translateY(20px);">
+                        <p class="text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-md mx-auto">
+                            They don't know who to trust. They have no clear pricing. <br>
+                            <span class="text-dutuk-charcoal font-medium italic">They are exhausted before the event
+                                even begins.</span>
+                        </p>
+                        <div class="mt-10 flex flex-col items-center gap-2">
+                            <span class="text-[9px] tracking-[0.45em] uppercase text-dutuk-charcoal/35">Discover The
+                                Cure</span>
+                            <div class="w-px h-10 bg-gradient-to-b from-dutuk-maroon/20 to-dutuk-maroon rounded-full">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right bubbles -->
+                <div class="hidden lg:flex flex-col gap-5 items-start">
+                    <div class="bubble-card" style="opacity:0;transform:scale(0.7) translateX(24px);">
+                        <svg width="24" height="24" fill="none" stroke="#800000" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                        <span>Unforeseen<br>Hidden Costs</span>
+                    </div>
+                    <div class="bubble-card" style="opacity:0;transform:scale(0.7) translateX(24px);">
+                        <svg width="24" height="24" fill="none" stroke="#800000" stroke-width="1.8" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                            <line x1="9" y1="16" x2="15" y2="16" />
+                        </svg>
+                        <span>Last-Minute<br>Cancellations</span>
+                    </div>
+                    <div class="bubble-card bubble-card--sm" style="opacity:0;transform:scale(0.7) translateX(24px);">
+                        <svg width="22" height="22" fill="none" stroke="#800000" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <span>Communication<br>Fragmentation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Phase 3: The Bridge (Pinned Snap Scroll) -->
+    <section id="bridge-pin-container" class="relative bg-dutuk-alabaster lg:h-[300vh]">
+        <div id="bridge-section"
+            class="lg:sticky lg:top-0 lg:h-screen flex flex-col lg:flex-row items-center justify-center gap-16 lg:overflow-hidden px-8 md:px-20 py-16 lg:py-0">
+
+            <!-- Left: SVG Bridge Visual -->
+            <div class="order-2 lg:order-1 w-full lg:w-1/2 max-w-lg" id="bridge-visual-wrap" style="opacity:0;">
+                <div
+                    class="relative h-[320px] md:h-[420px] w-full bg-dutuk-beige rounded-[3rem] md:rounded-[4rem] shadow-ethereal overflow-hidden flex items-center justify-center p-4 md:p-8 border border-dutuk-maroon/5">
+                    <svg class="w-full h-full" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path id="bridge-curve" class="bridge-path" d="M50 250C150 50 350 50 450 250" stroke="#800000"
+                            stroke-width="2.5" stroke-linecap="round" />
+
+                        <g class="bridge-node" opacity="0">
+                            <circle cx="50" cy="250" r="10" fill="#800000" />
+                            <text x="28" y="278" font-family="Inter" font-size="10" fill="#800000"
+                                font-weight="bold">VENDOR</text>
+                        </g>
+
+                        <g class="bridge-node" opacity="0">
+                            <circle cx="450" cy="250" r="10" fill="#800000" />
+                            <text x="432" y="278" font-family="Inter" font-size="10" fill="#800000"
+                                font-weight="bold">CLIENT</text>
+                        </g>
+
+                        <circle id="dutuk-link" cx="250" cy="150" r="15" fill="#800000" opacity="0" />
+                        <text id="dutuk-label" x="225" y="130" font-family="Playfair Display" font-style="italic"
+                            font-size="14" fill="#800000" font-weight="bold" opacity="0">DUTUK</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Right: Bridge Text -->
+            <div class="order-1 lg:order-2 w-full lg:w-1/2 max-w-xl" id="bridge-text-wrap" style="opacity:0;">
+                <div
+                    class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-maroon/[0.03] text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.4em] mb-6 md:mb-10 rounded-full border border-dutuk-maroon/5">
+                    Stage 03: The Bridge
+                </div>
+                <h2 class="font-display text-4xl md:text-7xl font-bold leading-tight mb-6 md:mb-8 tracking-tight">
+                    We build the <span class="serif-italic text-dutuk-maroon">Bridge.</span>
+                </h2>
+                <p class="text-sm md:text-lg font-light text-slate-500 mb-8 md:mb-12 leading-relaxed">
+                    Dutuk is the structural connection. We take the hidden talent and the desperate client and bring
+                    them to one single table.
+                </p>
+                <ul class="space-y-7">
+                    <li class="flex items-center gap-5 group">
+                        <span
+                            class="w-10 h-px bg-dutuk-maroon/25 group-hover:w-16 transition-all duration-500 flex-shrink-0"></span>
+                        <span class="text-lg font-medium text-dutuk-charcoal tracking-tight">Verified Pricing</span>
+                    </li>
+                    <li class="flex items-center gap-5 group">
+                        <span
+                            class="w-10 h-px bg-dutuk-maroon/25 group-hover:w-16 transition-all duration-500 flex-shrink-0"></span>
+                        <span class="text-lg font-medium text-dutuk-charcoal tracking-tight">Direct Connection</span>
+                    </li>
+                    <li class="flex items-center gap-5 group">
+                        <span
+                            class="w-10 h-px bg-dutuk-maroon/25 group-hover:w-16 transition-all duration-500 flex-shrink-0"></span>
+                        <span class="text-lg font-medium text-dutuk-charcoal tracking-tight">Total Structure</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 4: How It Works (3-Step Vendor Timeline) -->
+    <section id="how-it-works" class="relative bg-dutuk-alabaster lg:h-[400vh]">
+        <div id="hiw-sticky"
+            class="lg:sticky lg:top-0 lg:h-screen flex flex-col items-center justify-center lg:overflow-hidden px-6 md:px-20 py-20 lg:py-0">
+
+            <!-- Section Label -->
+            <div id="hiw-label" class="text-center mb-16" style="opacity:0; transform:translateY(30px);">
+                <div
+                    class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-charcoal/5 text-dutuk-charcoal text-[10px] font-bold uppercase tracking-[0.4em] mb-8 rounded-full">
+                    Stage 04: How It Works
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-normal leading-tight tracking-tight">
+                    Your path from <span class="serif-italic">hidden to booked.</span>
+                </h2>
+            </div>
+
+            <!-- Timeline Steps -->
+            <div class="relative w-full max-w-5xl mx-auto">
+
+                <!-- Connecting line -->
+                <div class="hidden md:block absolute top-10 left-[16.6%] right-[16.6%] h-px bg-dutuk-maroon/10"
+                    id="hiw-line" style="transform-origin: left; transform: scaleX(0);"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+
+                    <!-- Step 1: Vendor Lists -->
+                    <div id="hiw-step-1" class="flex flex-col items-center text-center"
+                        style="opacity:0; transform:translateY(40px);">
+                        <div class="relative mb-8">
+                            <div
+                                class="w-20 h-20 rounded-full bg-dutuk-maroon/8 border border-dutuk-maroon/15 flex items-center justify-center mb-4 mx-auto">
+                                <span class="font-display text-3xl font-normal text-dutuk-maroon italic">1</span>
+                            </div>
+                        </div>
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1 bg-dutuk-maroon/5 rounded-full text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
+                            You List
+                        </div>
+                        <h3 class="font-display text-2xl md:text-3xl font-normal mb-4 tracking-tight">
+                            Post Your Services
+                        </h3>
+                        <p class="text-slate-400 font-light leading-relaxed text-base">
+                            Create your vendor profile in minutes. List your event packages, set your pricing, upload
+                            your portfolio — your stage is ready.
+                        </p>
+                        <!-- Mini features -->
+                        <div class="mt-6 space-y-2 text-left w-full max-w-xs">
+                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
+                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/40 flex-shrink-0"></div>
+                                Packages with clear pricing
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
+                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/40 flex-shrink-0"></div>
+                                Portfolio gallery
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
+                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/40 flex-shrink-0"></div>
+                                Availability & calendar
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Client Discovers -->
+                    <div id="hiw-step-2" class="flex flex-col items-center text-center"
+                        style="opacity:0; transform:translateY(40px);">
+                        <div class="relative mb-8">
+                            <div
+                                class="w-20 h-20 rounded-full bg-dutuk-maroon/8 border border-dutuk-maroon/15 flex items-center justify-center mb-4 mx-auto">
+                                <span class="font-display text-3xl font-normal text-dutuk-maroon italic">2</span>
+                            </div>
+                        </div>
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1 bg-slate-400/10 rounded-full text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
+                            They Discover
+                        </div>
+                        <h3 class="font-display text-2xl md:text-3xl font-normal mb-4 tracking-tight">
+                            Clients Search &amp; Book
+                        </h3>
+                        <p class="text-slate-400 font-light leading-relaxed text-base">
+                            Clients browse by category, budget, and location. They view your profile, compare options,
+                            and send you a booking request directly.
+                        </p>
+                        <div class="mt-6 space-y-2 text-left w-full max-w-xs">
+                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
+                                <div class="w-1 h-1 rounded-full bg-slate-400/50 flex-shrink-0"></div>
+                                Browse by city &amp; category
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
+                                <div class="w-1 h-1 rounded-full bg-slate-400/50 flex-shrink-0"></div>
+                                Compare multiple vendors
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
+                                <div class="w-1 h-1 rounded-full bg-slate-400/50 flex-shrink-0"></div>
+                                Direct booking request
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Both Connect -->
+                    <div id="hiw-step-3" class="flex flex-col items-center text-center"
+                        style="opacity:0; transform:translateY(40px);">
+                        <div class="relative mb-8">
+                            <div
+                                class="w-20 h-20 rounded-full bg-dutuk-maroon flex items-center justify-center mb-4 mx-auto shadow-lg shadow-dutuk-maroon/20">
+                                <span class="font-display text-3xl font-normal text-white italic">3</span>
+                            </div>
+                        </div>
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1 bg-dutuk-maroon/10 rounded-full text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
+                            You Connect
+                        </div>
+                        <h3 class="font-display text-2xl md:text-3xl font-normal mb-4 tracking-tight">
+                            Accept. Deliver. Grow.
+                        </h3>
+                        <p class="text-slate-400 font-light leading-relaxed text-base">
+                            You review the request and accept or decline. Once confirmed, both sides are connected. You
+                            deliver the magic, they leave a review.
+                        </p>
+                        <div class="mt-6 space-y-2 text-left w-full max-w-xs">
+                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
+                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/60 flex-shrink-0"></div>
+                                Accept or decline requests
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
+                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/60 flex-shrink-0"></div>
+                                In-app chat with client
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
+                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/60 flex-shrink-0"></div>
+                                Earn reviews &amp; grow
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CTA nudge -->
+            <div id="hiw-cta" class="mt-16 text-center" style="opacity:0; transform:translateY(20px);">
+                <p class="text-dutuk-charcoal/40 text-sm font-light italic">Simple. Structured. Built for you.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Phase 4: Resolution (Membership) -->
+    <section id="resolution-section" class="py-40 px-6">
+        <div class="max-w-6xl mx-auto rounded-[5rem] relative group shadow-ethereal">
+            <div
+                class="absolute inset-0 bg-dutuk-maroon opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-1000">
+            </div>
+            <div
+                class="relative py-24 px-12 md:px-32 text-center m-4 rounded-[4rem] border border-dutuk-maroon/5 bg-white/40 backdrop-blur-sm">
+                <h2
+                    class="font-display text-6xl md:text-8xl font-normal text-dutuk-charcoal mb-8 tracking-tighter italic">
+                    Connection <br>Simplified.
+                </h2>
+                <div class="text-slate-400 text-lg md:text-xl font-light mb-12 space-y-4 italic max-w-2xl mx-auto">
+                    <p>The system is ready. The bridge is built. All you have to do is cross it.</p>
+                </div>
+
+                <div id="resolution-ctas" class="flex flex-col md:flex-row items-center justify-center gap-6">
+                    <a href="https://dutuk.com"
+                        class="group relative px-12 py-6 bg-dutuk-charcoal text-white font-display font-medium text-xl rounded-full shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full md:w-auto">
+                        <span class="relative z-10">Cross the Bridge</span>
+                        <div
+                            class="absolute inset-0 bg-dutuk-maroon translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out">
+                        </div>
+                    </a>
+
+                    <a href="#"
+                        class="group relative px-10 py-6 bg-white border border-dutuk-charcoal/10 text-dutuk-charcoal font-display font-medium text-xl rounded-full shadow-ethereal hover:shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full md:w-auto flex items-center justify-center gap-3">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="group-hover:scale-110 transition-transform duration-500">
+                            <path
+                                d="M3.24988 2.05005C3.08988 2.21005 2.99988 2.45005 2.99988 2.76005V21.25C2.99988 21.56 3.08988 21.8 3.24988 21.96L3.30988 22.01L13.1499 12.17V11.83L3.30988 1.99005L3.24988 2.05005Z"
+                                fill="#2196F3" />
+                            <path
+                                d="M16.41 15.42L13.15 12.16V11.82L16.41 8.56006L16.46 8.59006L20.29 10.77C21.39 11.39 21.39 12.41 20.29 13.03L16.46 15.21L16.41 15.42Z"
+                                fill="#FFC107" />
+                            <path
+                                d="M16.46 15.2L13.15 11.89L3.30981 21.73C3.65981 22.1 4.23981 22.14 4.88981 21.77L16.46 15.2Z"
+                                fill="#F44336" />
+                            <path
+                                d="M16.46 8.59009L4.88981 2.02009C4.23981 1.65009 3.65981 1.69009 3.30981 2.06009L13.15 11.9L16.46 8.59009Z"
+                                fill="#4CAF50" />
+                        </svg>
+                        <div class="text-left flex flex-col items-start">
+                            <span class="text-[8px] uppercase tracking-widest leading-none opacity-40">Get it on</span>
+                            <span class="text-lg">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="py-32 px-8 md:px-20 bg-dutuk-beige border-t border-dutuk-maroon/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16">
+            <div>
+                <div class="flex items-center gap-5 mb-12">
+                    <div
+                        class="w-14 h-14 bg-dutuk-maroon rounded-full flex items-center justify-center shadow-lg shadow-maroon/10">
+                        <span class="text-white font-display font-bold text-2xl italic leading-none">D</span>
+                    </div>
+                    <span class="font-display font-bold text-4xl tracking-tighter">Dutuk</span>
+                </div>
+                <p class="text-2xl font-light text-slate-400 serif-italic">Connecting two worlds properly.</p>
+            </div>
+
+            <div class="flex flex-col md:items-end gap-10">
+                <div
+                    class="flex items-center gap-4 text-dutuk-maroon px-8 py-3 rounded-full border border-dutuk-maroon/10 text-[10px] font-bold tracking-[0.4em] uppercase">
+                    <span class="w-1.5 h-1.5 rounded-full bg-dutuk-maroon animate-pulse"></span>
+                    Bridge Active
+                </div>
+                <div class="text-[9px] font-bold text-dutuk-maroon/20 uppercase tracking-[0.5em]">
+                    © MMXXVI DUTUK ECOSYSTEM • LUXURY BRIDGING
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+        // ─── Detect device ───
+        const isDesktop = window.innerWidth >= 1024;
+        const scrollContainer = document.querySelector("[data-scroll-container]");
+        let locoScroll = null;
+        let SC = null; // scroller reference: scrollContainer on desktop, null (=window) on mobile
+
+        if (isDesktop) {
+            // ─── Desktop: Locomotive Scroll + GSAP ScrollTrigger Proxy ───
+            locoScroll = new LocomotiveScroll({
+                el: scrollContainer,
+                smooth: true,
+                multiplier: 0.9,
+                lerp: 0.08,
+                smartphone: { smooth: false },
+                tablet: { smooth: false }
+            });
+
+            locoScroll.on("scroll", ScrollTrigger.update);
+
+            ScrollTrigger.scrollerProxy(scrollContainer, {
+                scrollTop(value) {
+                    return arguments.length
+                        ? locoScroll.scrollTo(value, { duration: 0, disableLerp: true })
+                        : locoScroll.scroll.instance.scroll.y;
+                },
+                getBoundingClientRect() {
+                    return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+                },
+                pinType: scrollContainer.style.transform ? "transform" : "fixed"
+            });
+
+            ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+            SC = scrollContainer;
+        } else {
+            // ─── Mobile: NO Locomotive Scroll — use native browser scroll ───
+            // Remove data-scroll-container behavior so native scroll works
+            scrollContainer.removeAttribute('data-scroll-container');
+            SC = null; // null = GSAP uses window/document as scroller
+        }
+
+        // ─── Scroller config helper ───
+        // Returns { scroller: SC } only on desktop, empty object on mobile
+        const scrollerOpts = SC ? { scroller: SC } : {};
+
+        // 1. Hero Reveal
+        const heroTl = gsap.timeline();
+        heroTl.from("#vendor-headline", { opacity: 0, y: 100, duration: 2, ease: "power4.out" })
+            .from("#vendor-subtext", { opacity: 0, y: 40, duration: 2, ease: "power3.out" }, "-=1.5")
+            .from(".group.relative .relative.rounded-\\[4rem\\]", { opacity: 0, x: 50, rotate: 2, duration: 2, ease: "power4.out" }, "-=1.8");
+
+        // Chaos Dots — desktop only, reduced count (15 instead of 50)
+        if (isDesktop) {
+            const dotsContainer = document.getElementById('dots-container');
+            const DOT_COUNT = 15;
+            for (let i = 0; i < DOT_COUNT; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'chaos-dot';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.top = Math.random() * 100 + '%';
+                dotsContainer.appendChild(dot);
+
+                gsap.to(dot, {
+                    x: (Math.random() - 0.5) * 300,
+                    y: (Math.random() - 0.5) * 300,
+                    duration: 15 + Math.random() * 15,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+            }
+        }
+
+        // 2. Bubble cards
+        const bubbles = gsap.utils.toArray('.bubble-card');
+
+
+        // ╔══════════════════════════════════════════════════════╗
+        // ║  PAUSED TIMELINES — content only (no navbar)        ║
+        // ╚══════════════════════════════════════════════════════╝
+
+        // Chaos content
+        const chaosTl = gsap.timeline({ paused: true })
+            .to("#chaos-header", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" })
+            .to("#chaos-header-text", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.5")
+            .to(bubbles, {
+                opacity: 1, scale: 1, x: 0,
+                stagger: { each: 0.1, from: "start" },
+                duration: 0.7, ease: "back.out(1.7)"
+            }, "-=0.4")
+            .to("#chaos-desc", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.2");
+
+        // Bridge: text + visual slide-in
+        const bridgeEntryTl = gsap.timeline({ paused: true })
+            .fromTo("#bridge-text-wrap",
+                { opacity: 0, x: isDesktop ? 50 : 0, y: isDesktop ? 0 : 30 },
+                { opacity: 1, x: 0, y: 0, duration: 1, ease: "power3.out" })
+            .fromTo("#bridge-visual-wrap",
+                { opacity: 0, x: isDesktop ? -50 : 0, y: isDesktop ? 0 : 30 },
+                { opacity: 1, x: 0, y: 0, duration: 1, ease: "power3.out" }, "-=0.85");
+
+        // Bridge: SVG draw
+        const bridgeSvgTl = gsap.timeline({ paused: true })
+            .to(".bridge-path", { strokeDashoffset: 0, duration: 1.8, ease: "power2.inOut" })
+            .to(".bridge-node", { opacity: 1, stagger: 0.3, duration: 0.6, ease: "back.out(1.5)" }, "-=0.8")
+            .to("#dutuk-link", { opacity: 1, scale: 1.2, duration: 0.8, ease: "back.out(2)" }, "-=0.3")
+            .to("#dutuk-label", { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.3");
+
+        // HIW: heading + line
+        const hiwLabelTl = gsap.timeline({ paused: true })
+            .to("#hiw-label", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" })
+            .to("#hiw-line", { scaleX: 1, duration: 1.2, ease: "power2.inOut" }, "-=0.4");
+
+        // HIW: steps
+        const hiwStep1Tl = gsap.timeline({ paused: true })
+            .fromTo("#hiw-step-1", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
+        const hiwStep2Tl = gsap.timeline({ paused: true })
+            .fromTo("#hiw-step-2", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
+        const hiwStep3Tl = gsap.timeline({ paused: true })
+            .fromTo("#hiw-step-3", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" })
+            .fromTo("#hiw-cta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.4");
+
+        // Helpers: instantly show all content in a section
+        function completeChaosTl() {
+            gsap.set("#chaos-header", { opacity: 1, y: 0 });
+            gsap.set("#chaos-header-text", { opacity: 1, y: 0 });
+            gsap.set("#chaos-desc", { opacity: 1, y: 0 });
+            gsap.set(bubbles, { opacity: 1, scale: 1, x: 0 });
+        }
+        function completeBridgeTl() {
+            gsap.set("#bridge-text-wrap", { opacity: 1, x: 0 });
+            gsap.set("#bridge-visual-wrap", { opacity: 1, x: 0 });
+            gsap.set(".bridge-path", { strokeDashoffset: 0 });
+            gsap.set(".bridge-node", { opacity: 1 });
+            gsap.set("#dutuk-link", { opacity: 1, scale: 1.2 });
+            gsap.set("#dutuk-label", { opacity: 1, y: 0 });
+        }
+        function completeHiwTl() {
+            gsap.set("#hiw-label", { opacity: 1, y: 0 });
+            gsap.set("#hiw-line", { scaleX: 1 });
+            gsap.set("#hiw-step-1", { opacity: 1, y: 0 });
+            gsap.set("#hiw-step-2", { opacity: 1, y: 0 });
+            gsap.set("#hiw-step-3", { opacity: 1, y: 0 });
+            gsap.set("#hiw-cta", { opacity: 1, y: 0 });
+        }
+
+        // ── SCROLL TRIGGERS — desktop: pin+snap+play/reverse | mobile: simple reveals ──
+
+        if (isDesktop) {
+            // 3. CHAOS — pin + snap
+            ScrollTrigger.create({
+                trigger: "#chaos-pin-container", ...scrollerOpts,
+                start: "top top", end: "bottom bottom",
+                pin: "#chaos-section", pinType: "transform",
+                snap: { snapTo: 1 / 3, duration: { min: 0.3, max: 0.6 }, delay: 0.05, ease: "power2.inOut" }
+            });
+            ScrollTrigger.create({
+                trigger: "#chaos-pin-container", ...scrollerOpts, start: "top 60%",
+                onEnter: () => { chaosTl.play(); gsap.to("#navbar", { autoAlpha: 0, y: -20, duration: 0.4 }); },
+                onLeaveBack: () => { chaosTl.reverse(); gsap.to("#navbar", { autoAlpha: 1, y: 0, duration: 0.4 }); }
+            });
+            ScrollTrigger.create({
+                trigger: "#chaos-pin-container", ...scrollerOpts, start: "bottom bottom",
+                onEnter: () => gsap.to("#navbar", { autoAlpha: 1, y: 0, duration: 0.4 }),
+                onLeaveBack: () => gsap.to("#navbar", { autoAlpha: 0, y: -20, duration: 0.4 })
+            });
+
+            // 4. BRIDGE — pin + snap
+            ScrollTrigger.create({
+                trigger: "#bridge-pin-container", ...scrollerOpts,
+                start: "top top", end: "bottom bottom",
+                pin: "#bridge-section", pinType: "transform",
+                snap: { snapTo: 1 / 3, duration: { min: 0.3, max: 0.6 }, delay: 0.05, ease: "power2.inOut" }
+            });
+            ScrollTrigger.create({
+                trigger: "#bridge-pin-container", ...scrollerOpts, start: "top 60%",
+                onEnter: () => bridgeEntryTl.play(),
+                onLeaveBack: () => bridgeEntryTl.reverse()
+            });
+            ScrollTrigger.create({
+                trigger: "#bridge-pin-container", ...scrollerOpts, start: "33% top",
+                onEnter: () => bridgeSvgTl.play(),
+                onLeave: () => gsap.to("#navbar", { autoAlpha: 1, y: 0, duration: 0.4 })
+            });
+
+            // 5. HOW IT WORKS — pin + snap
+            ScrollTrigger.create({
+                trigger: "#how-it-works", ...scrollerOpts,
+                start: "top top", end: "bottom bottom",
+                pin: "#hiw-sticky", pinType: "transform",
+                snap: { snapTo: 1 / 4, duration: { min: 0.3, max: 0.6 }, delay: 0.05, ease: "power2.inOut" }
+            });
+            ScrollTrigger.create({
+                trigger: "#how-it-works", ...scrollerOpts, start: "top 60%",
+                onEnter: () => hiwLabelTl.play(),
+                onLeaveBack: () => hiwLabelTl.reverse()
+            });
+            ScrollTrigger.create({
+                trigger: "#how-it-works", ...scrollerOpts, start: "25% top",
+                onEnter: () => hiwStep1Tl.play(),
+                onLeaveBack: () => hiwStep1Tl.reverse()
+            });
+            ScrollTrigger.create({
+                trigger: "#how-it-works", ...scrollerOpts, start: "50% top",
+                onEnter: () => hiwStep2Tl.play(),
+                onLeaveBack: () => hiwStep2Tl.reverse()
+            });
+            ScrollTrigger.create({
+                trigger: "#how-it-works", ...scrollerOpts, start: "75% top",
+                onEnter: () => hiwStep3Tl.play(),
+                onLeaveBack: () => hiwStep3Tl.reverse(),
+                onLeave: () => gsap.to("#navbar", { autoAlpha: 1, y: 0, duration: 0.4 })
+            });
+
+        } else {
+            // ── MOBILE: lightweight scroll-reveal animations, NO Locomotive, NO pin/snap ──
+            const mo = (el, vars) => gsap.fromTo(el, { opacity: 0, y: vars.y ?? 30 }, {
+                opacity: 1, y: 0, duration: vars.d ?? 0.8, ease: vars.ease ?? "power3.out",
+                scrollTrigger: { trigger: vars.trigger ?? el, start: "top 95%", once: true }
+            });
+
+            // Chaos reveals
+            mo("#chaos-header", { trigger: "#chaos-pin-container" });
+            mo("#chaos-header-text", { trigger: "#chaos-pin-container", y: 20, d: 0.9 });
+            mo("#chaos-desc", { trigger: "#chaos-pin-container", y: 20, d: 0.7 });
+
+            // Bridge reveals
+            mo("#bridge-visual-wrap", { trigger: "#bridge-pin-container", y: 20, d: 0.9 });
+            mo("#bridge-text-wrap", { trigger: "#bridge-pin-container", y: 20, d: 0.9 });
+            gsap.fromTo(".bridge-path", { opacity: 0 }, {
+                opacity: 1, duration: 0.9, ease: "power2.out",
+                scrollTrigger: { trigger: "#bridge-pin-container", start: "top 95%", once: true }
+            });
+            gsap.fromTo(".bridge-node, #dutuk-link, #dutuk-label", { opacity: 0 }, {
+                opacity: 1, stagger: 0.25, duration: 0.6, ease: "power2.out",
+                scrollTrigger: { trigger: "#bridge-pin-container", start: "top 85%", once: true }
+            });
+
+            // HIW reveals
+            mo("#hiw-label", { trigger: "#how-it-works" });
+            mo("#hiw-step-1", { trigger: "#hiw-step-1", y: 40, d: 0.9 });
+            mo("#hiw-step-2", { trigger: "#hiw-step-2", y: 40, d: 0.9 });
+            mo("#hiw-step-3", { trigger: "#hiw-step-3", y: 40, d: 0.9 });
+            mo("#hiw-cta", { trigger: "#hiw-step-3", y: 20, d: 0.7 });
+            gsap.fromTo("#hiw-line", { scaleX: 0 }, {
+                scaleX: 1, duration: 1.2, ease: "power2.inOut",
+                scrollTrigger: { trigger: "#how-it-works", start: "top 95%", once: true }
+            });
+        }
+
+
+        // ── 6. Global Alive Reveals (skip pinned sections) ────────
+        const pinnedIds = new Set(['chaos-pin-container', 'bridge-pin-container', 'how-it-works', 'resolution-section']);
+        gsap.utils.toArray('section').forEach(section => {
+            if (pinnedIds.has(section.id)) return;
+            gsap.from(section.querySelectorAll('h2, p, .group'), {
+                scrollTrigger: { trigger: section, ...scrollerOpts, start: "top 95%", once: !isDesktop },
+                y: 50, opacity: 0, duration: 2, stagger: 0.2, ease: "power4.out"
+            });
+        });
+
+        // Dedicated Resolution section animation
+        gsap.from("#resolution-section h2, #resolution-section p, #resolution-section #resolution-ctas", {
+            scrollTrigger: { trigger: "#resolution-section", ...scrollerOpts, start: "top 98%", once: !isDesktop },
+            y: 30, opacity: 0, duration: 1.2, stagger: 0.15, ease: "power3.out"
+        });
+
+        // Navbar shadow
+        ScrollTrigger.create({
+            trigger: isDesktop ? SC : "body",
+            ...scrollerOpts,
+            start: "top -80",
+            onEnter: () => gsap.to("#navbar", { backgroundColor: "rgba(253,251,247,0.95)", boxShadow: "0 10px 40px -20px rgba(128,0,0,0.1)", duration: 0.5 }),
+            onLeaveBack: () => gsap.to("#navbar", { backgroundColor: isDesktop ? "rgba(253,251,247,0.8)" : "rgba(253,251,247,0.97)", boxShadow: "none", duration: 0.5 })
+        });
+
+        // Final refresh — MUST be last
+        ScrollTrigger.refresh();
+
+    </script>
+</body>
+
+</html>
