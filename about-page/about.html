@@ -166,96 +166,6 @@
             z-index: 1;
         }
 
-        /* Mobile hamburger */
-        .nav-hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 4px;
-        }
-
-        .nav-hamburger span {
-            display: block;
-            width: 20px;
-            height: 1.5px;
-            background: #1A1A1A;
-            border-radius: 2px;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .nav-hamburger.open span:nth-child(1) {
-            transform: translateY(6.5px) rotate(45deg);
-        }
-
-        .nav-hamburger.open span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .nav-hamburger.open span:nth-child(3) {
-            transform: translateY(-6.5px) rotate(-45deg);
-        }
-
-        /* Mobile drawer */
-        #mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(253, 251, 247, 0.97);
-            backdrop-filter: blur(20px);
-            z-index: 45;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        #mobile-menu.open {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        #mobile-menu a {
-            font-size: 28px;
-            font-family: 'Playfair Display', serif;
-            color: #1A1A1A;
-            text-decoration: none;
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s ease;
-        }
-
-        #mobile-menu.open a {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        #mobile-menu.open a:nth-child(1) {
-            transition-delay: 0.05s;
-        }
-
-        #mobile-menu.open a:nth-child(2) {
-            transition-delay: 0.1s;
-        }
-
-        #mobile-menu.open a:nth-child(3) {
-            transition-delay: 0.15s;
-        }
-
-        #mobile-menu.open a:nth-child(4) {
-            transition-delay: 0.2s;
-        }
-
-        #mobile-menu a:hover {
-            color: #800000;
-        }
-
         @media (max-width: 767px) {
             #navbar {
                 padding: 10px 16px;
@@ -266,10 +176,6 @@
             .nav-links,
             .nav-divider {
                 display: none !important;
-            }
-
-            .nav-hamburger {
-                display: flex;
             }
         }
 
@@ -364,17 +270,19 @@
         /* Coming Soon badge on Playstore button */
         .coming-soon-badge {
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: -5px;
+            right: 0px;
             background: #800000;
             color: #fff;
-            font-size: 7px;
+            font-size: 8px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            padding: 3px 7px;
+            padding: 4px 10px;
             border-radius: 999px;
             pointer-events: none;
+            box-shadow: 0 4px 12px rgba(128, 0, 0, 0.2);
+            z-index: 2;
         }
 
         /* Hero WhatsApp button — sliding maroon fill on hover */
@@ -390,6 +298,7 @@
             transform: translateY(100%);
             transition: transform 0.42s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 0;
+            pointer-events: none;
         }
 
         #hero-wa-btn:hover .hero-wa-fill {
@@ -403,7 +312,7 @@
             color: #fff;
         }
 
-        #hero-wa-btn:hover span:last-child {
+        #hero-wa-btn:hover .hero-wa-label {
             color: #fff;
         }
 
@@ -495,29 +404,13 @@
             <span>WhatsApp Us</span>
         </a>
 
-        <!-- Mobile hamburger -->
-        <button id="hamburger" class="nav-hamburger" aria-label="Menu"
-            style="margin-left:12px;background:none;border:none;">
-            <span></span><span></span><span></span>
-        </button>
     </nav>
-
-    <!-- Mobile full-screen menu -->
-    <div id="mobile-menu">
-        <a href="#" data-nav-to="hero-section">The Pain</a>
-        <a href="#" data-nav-to="chaos-pin-container">The Chaos</a>
-        <a href="#" data-nav-to="bridge-pin-container">The Bridge</a>
-        <a href="https://wa.me/919XXXXXXXXX" style="color:#800000;font-size:18px;">WhatsApp Us ↗</a>
-    </div>
 
     <!-- Phase 1: The Vendor's Pain (Hero) -->
     <section id="hero-section" data-scroll-section
         class="min-h-[80vh] flex items-center justify-center px-6 pt-40 pb-20 relative overflow-hidden">
         <div class="max-w-4xl w-full text-center z-10">
-            <div
-                class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-maroon/[0.03] text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.4em] mb-10 rounded-full border border-dutuk-maroon/5">
-                Stage 01: The Vendor Reality
-            </div>
+
             <h1 id="vendor-headline"
                 class="font-display text-6xl md:text-8xl font-normal leading-tight mb-10 tracking-tighter">
                 Struggling to get <br>
@@ -530,24 +423,22 @@
                 <p class="text-dutuk-charcoal font-semibold italic">They have the skill. They just don't have the stage.
                 </p>
             </div>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="#coming-soon" onclick="return false;"
-                    class="relative px-12 py-5 bg-dutuk-maroon text-white rounded-full font-display font-bold text-xl hover:bg-dutuk-charcoal transition-all duration-700 shadow-luxury opacity-80 cursor-not-allowed">
-                    <span class="coming-soon-badge">Coming Soon</span>
-                    Download from Playstore
-                </a>
+            <div class="flex flex-col sm:flex-row gap-5 justify-center items-stretch">
                 <a href="https://wa.me/919XXXXXXXXX" id="hero-wa-btn"
-                    class="group relative px-12 py-5 bg-white border border-dutuk-maroon text-dutuk-maroon rounded-full font-display font-bold text-xl shadow-ethereal overflow-hidden"
-                    style="display:inline-flex;align-items:center;justify-content:center;transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease;">
+                    class="relative inline-flex items-center justify-center px-10 py-5 bg-dutuk-maroon text-white border border-dutuk-maroon rounded-full font-display font-bold text-lg shadow-luxury overflow-hidden transition-all duration-700">
                     <span class="hero-wa-fill" aria-hidden="true"></span>
-                    <span
-                        style="position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;transition:color 0.35s ease;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
+                    <div class="hero-wa-label relative z-10 flex items-center gap-3 transition-colors duration-350">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="shrink-0">
                             <path
                                 d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                         </svg>
                         WhatsApp Us
-                    </span>
+                    </div>
+                </a>
+                <a href="#coming-soon" onclick="return false;"
+                    class="relative inline-flex items-center justify-center px-10 py-5 bg-white border border-dutuk-maroon text-dutuk-maroon rounded-full font-display font-bold text-lg shadow-ethereal transition-all duration-700 opacity-90 cursor-not-allowed">
+                    <span class="coming-soon-badge">Coming Soon</span>
+                    Download from Playstore
                 </a>
             </div>
         </div>
@@ -561,13 +452,9 @@
         <div id="chaos-section"
             class="lg:sticky lg:top-0 lg:h-screen flex flex-col items-center justify-center lg:overflow-hidden px-6 py-10 min-h-screen">
 
-            <!-- Stage label -->
+            <!-- Chaos header (animation target preserved) -->
             <div id="chaos-header" class="text-center mb-10 relative z-30"
                 style="opacity: 0; transform: translateY(40px);">
-                <div
-                    class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-charcoal/5 text-dutuk-charcoal text-[10px] font-bold uppercase tracking-[0.4em] rounded-full">
-                    Stage 02: The Client Struggle
-                </div>
             </div>
 
             <!-- 3-col layout -->
@@ -695,10 +582,7 @@
 
             <!-- Right: Bridge Text -->
             <div class="order-1 lg:order-2 w-full lg:w-1/2 max-w-xl" id="bridge-text-wrap" style="opacity:0;">
-                <div
-                    class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-maroon/[0.03] text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.4em] mb-6 md:mb-10 rounded-full border border-dutuk-maroon/5">
-                    Stage 03: The Bridge
-                </div>
+
                 <h2 class="font-display text-4xl md:text-7xl font-bold leading-tight mb-6 md:mb-8 tracking-tight">
                     We build the <span class="serif-italic text-dutuk-maroon">Bridge.</span>
                 </h2>
@@ -733,11 +617,8 @@
             class="lg:sticky lg:top-0 lg:h-screen flex flex-col items-center justify-center lg:overflow-hidden px-6 md:px-20 py-20 lg:py-0">
 
             <!-- Section Label -->
-            <div id="hiw-label" class="text-center mb-16" style="opacity:0; transform:translateY(30px);">
-                <div
-                    class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-charcoal/5 text-dutuk-charcoal text-[10px] font-bold uppercase tracking-[0.4em] mb-8 rounded-full">
-                    Stage 04: How It Works
-                </div>
+            <div id="hiw-label" class="text-center mb-16">
+
                 <h2 class="font-display text-4xl md:text-6xl font-normal leading-tight tracking-tight">
                     Your path from <span class="serif-italic">hidden to booked.</span>
                 </h2>
@@ -753,8 +634,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6">
 
                     <!-- Step 1: Register -->
-                    <div id="hiw-step-1" class="flex flex-col items-center text-center"
-                        style="opacity:0; transform:translateY(40px);">
+                    <div id="hiw-step-1" class="flex flex-col items-center text-center">
                         <div class="relative mb-8">
                             <div
                                 class="w-20 h-20 rounded-full bg-dutuk-maroon/8 border border-dutuk-maroon/15 flex items-center justify-center mb-4 mx-auto">
@@ -774,8 +654,7 @@
                     </div>
 
                     <!-- Step 2: Receive Leads -->
-                    <div id="hiw-step-2" class="flex flex-col items-center text-center"
-                        style="opacity:0; transform:translateY(40px);">
+                    <div id="hiw-step-2" class="flex flex-col items-center text-center">
                         <div class="relative mb-8">
                             <div
                                 class="w-20 h-20 rounded-full bg-dutuk-maroon/8 border border-dutuk-maroon/15 flex items-center justify-center mb-4 mx-auto">
@@ -795,8 +674,7 @@
                     </div>
 
                     <!-- Step 3: Confirm -->
-                    <div id="hiw-step-3" class="flex flex-col items-center text-center"
-                        style="opacity:0; transform:translateY(40px);">
+                    <div id="hiw-step-3" class="flex flex-col items-center text-center">
                         <div class="relative mb-8">
                             <div
                                 class="w-20 h-20 rounded-full bg-dutuk-maroon/8 border border-dutuk-maroon/15 flex items-center justify-center mb-4 mx-auto">
@@ -817,8 +695,7 @@
                     </div>
 
                     <!-- Step 4: Pay/Grow -->
-                    <div id="hiw-step-4" class="flex flex-col items-center text-center"
-                        style="opacity:0; transform:translateY(40px);">
+                    <div id="hiw-step-4" class="flex flex-col items-center text-center">
                         <div class="relative mb-8">
                             <div
                                 class="w-20 h-20 rounded-full bg-dutuk-maroon flex items-center justify-center mb-4 mx-auto shadow-lg shadow-dutuk-maroon/20">
@@ -841,7 +718,7 @@
             </div>
 
             <!-- CTA nudge -->
-            <div id="hiw-cta" class="mt-16 text-center" style="opacity:0; transform:translateY(20px);">
+            <div id="hiw-cta" class="mt-16 text-center">
                 <p class="text-dutuk-charcoal/60 text-sm font-medium italic">Simple. Structured. Built for you.</p>
             </div>
         </div>
@@ -850,10 +727,7 @@
     <!-- Phase 5: Who Can Join (The Ecosystem) -->
     <section id="ecosystem-section" data-scroll-section class="py-32 bg-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-8 md:px-20 text-center relative z-10">
-            <div
-                class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-maroon/[0.03] text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.4em] mb-10 rounded-full border border-dutuk-maroon/5">
-                Stage 05: The Ecosystem
-            </div>
+
             <h2 class="font-display text-4xl md:text-6xl font-normal mb-20 tracking-tight">
                 Who can join <span class="serif-italic">the circle?</span>
             </h2>
@@ -996,10 +870,7 @@
     <section id="advantage-section" data-scroll-section class="py-40 bg-dutuk-alabaster overflow-hidden">
         <div class="max-w-7xl mx-auto px-8 md:px-20">
             <div class="text-center mb-24">
-                <div
-                    class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-charcoal/5 text-dutuk-charcoal text-[10px] font-bold uppercase tracking-[0.4em] mb-8 rounded-full">
-                    Stage 06: The Advantage
-                </div>
+
                 <h2 class="font-display text-4xl md:text-6xl font-normal tracking-tight">
                     Why vendors <span class="serif-italic text-dutuk-maroon">choose Dutuk.</span>
                 </h2>
@@ -1071,36 +942,40 @@
     </section>
 
 
-    <!-- Phase 7: Resolution (Membership) -->
-    <section id="resolution-section" data-scroll-section class="py-40 px-6">
-        <div class="max-w-6xl mx-auto rounded-[5rem] relative group shadow-ethereal">
+    <section id="resolution-section" data-scroll-section class="py-20 md:py-40 px-6 bg-white md:bg-dutuk-alabaster">
+        <div class="max-w-6xl mx-auto md:rounded-[5rem] relative group md:shadow-ethereal">
             <div
-                class="absolute inset-0 bg-dutuk-maroon opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-1000">
+                class="hidden md:block absolute inset-0 bg-dutuk-maroon opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-1000">
             </div>
             <div
-                class="relative py-24 px-12 md:px-32 text-center m-4 rounded-[4rem] border border-dutuk-maroon/5 bg-white/40 backdrop-blur-sm">
+                class="relative py-12 md:py-24 px-6 md:px-32 text-center md:m-4 md:rounded-[4rem] md:border md:border-dutuk-maroon/5 md:bg-white/40 md:backdrop-blur-sm">
                 <h2
-                    class="font-display text-6xl md:text-8xl font-normal text-dutuk-charcoal mb-8 tracking-tighter italic">
-                    Connection <br>Simplified.
+                    class="font-display text-3xl md:text-8xl font-normal text-dutuk-charcoal mb-6 md:mb-8 tracking-tighter leading-tight md:leading-[1.1]">
+                    Start getting more <br class="hidden md:block">
+                    <span class="serif-italic">event bookings today.</span>
                 </h2>
                 <div
-                    class="text-dutuk-charcoal/65 text-lg md:text-xl font-normal mb-12 space-y-4 italic max-w-2xl mx-auto">
-                    <p>The system is ready. The bridge is built. All you have to do is cross it.</p>
+                    class="text-dutuk-charcoal/65 text-base md:text-xl font-normal mb-12 md:mb-16 space-y-4 max-w-2xl mx-auto">
+                    <p class="md:hidden">The system is ready. The bridge is built. All you have to do is cross it.</p>
+                    <p class="hidden md:block italic">The system is ready. The bridge is built. All you have to do is
+                        cross it.</p>
                 </div>
 
-                <div id="resolution-ctas" class="flex flex-col md:flex-row items-center justify-center gap-6">
+                <div id="resolution-ctas" class="flex flex-col md:flex-row items-center justify-center gap-5 md:gap-6">
                     <a href="https://wa.me/919XXXXXXXXX"
-                        class="group relative px-12 py-6 bg-dutuk-charcoal text-white font-display font-medium text-xl rounded-full shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full md:w-auto">
+                        class="group relative px-10 md:px-14 py-5 md:py-7 bg-dutuk-maroon text-white font-display font-medium text-lg md:text-xl rounded-full shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full max-w-xs md:w-auto">
                         <span class="relative z-10">WhatsApp Us</span>
                         <div
-                            class="absolute inset-0 bg-dutuk-maroon translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out">
+                            class="absolute inset-0 bg-dutuk-charcoal translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out">
                         </div>
                     </a>
 
                     <a href="#coming-soon" onclick="return false;"
-                        class="group relative px-10 py-6 bg-white border border-dutuk-charcoal/10 text-dutuk-charcoal font-display font-medium text-xl rounded-full shadow-ethereal hover:shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full md:w-auto flex items-center justify-center gap-3 opacity-75 cursor-not-allowed">
-                        <span class="coming-soon-badge">Coming Soon</span>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        class="group relative px-10 md:px-12 py-5 md:py-7 bg-dutuk-charcoal md:bg-white border border-transparent md:border-dutuk-charcoal/10 text-white md:text-dutuk-charcoal font-display font-medium text-lg md:text-xl rounded-full shadow-luxury md:shadow-ethereal hover:shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full max-w-xs md:w-auto flex items-center justify-center gap-3 opacity-90 cursor-not-allowed">
+                        <span
+                            class="absolute top-2 right-4 px-2 py-0.5 bg-dutuk-maroon text-[7px] md:text-[8px] text-white rounded-full uppercase tracking-widest font-bold">Coming
+                            Soon</span>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                             class="group-hover:scale-110 transition-transform duration-500">
                             <path
                                 d="M3.24988 2.05005C3.08988 2.21005 2.99988 2.45005 2.99988 2.76005V21.25C2.99988 21.56 3.08988 21.8 3.24988 21.96L3.30988 22.01L13.1499 12.17V11.83L3.30988 1.99005L3.24988 2.05005Z"
@@ -1115,9 +990,10 @@
                                 d="M16.46 8.59009L4.88981 2.02009C4.23981 1.65009 3.65981 1.69009 3.30981 2.06009L13.15 11.9L16.46 8.59009Z"
                                 fill="#4CAF50" />
                         </svg>
-                        <div class="text-left flex flex-col items-start">
-                            <span class="text-[8px] uppercase tracking-widest leading-none opacity-40">Get it on</span>
-                            <span class="text-lg">Google Play</span>
+                        <div class="text-left flex flex-col items-start pt-1">
+                            <span class="text-[7px] md:text-[8px] uppercase tracking-widest leading-none opacity-40">Get
+                                it on</span>
+                            <span class="text-base md:text-lg">Google Play</span>
                         </div>
                     </a>
                 </div>
@@ -1126,29 +1002,7 @@
     </section>
 
 
-    <!-- Footer -->
-    <footer data-scroll-section class="py-32 px-8 md:px-20 bg-dutuk-beige border-t border-dutuk-maroon/5">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16">
-            <div>
-                <div class="flex items-center gap-5 mb-12">
-                    <img src="favicon.png" alt="Dutuk Logo" class="w-14 h-14 object-contain">
-                    <span class="font-display font-bold text-4xl tracking-tighter">Dutuk</span>
-                </div>
-                <p class="text-2xl font-normal text-dutuk-charcoal/60 serif-italic">Connecting two worlds properly.</p>
-            </div>
 
-            <div class="flex flex-col md:items-end gap-10">
-                <div
-                    class="flex items-center gap-4 text-dutuk-maroon px-8 py-3 rounded-full border border-dutuk-maroon/10 text-[10px] font-bold tracking-[0.4em] uppercase">
-                    <span class="w-1.5 h-1.5 rounded-full bg-dutuk-maroon animate-pulse"></span>
-                    Bridge Active
-                </div>
-                <div class="text-[9px] font-bold text-dutuk-maroon/20 uppercase tracking-[0.5em]">
-                    © MMXXVI DUTUK ECOSYSTEM • LUXURY BRIDGING
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
@@ -1276,6 +1130,11 @@
             .fromTo("#hiw-step-4", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" })
             .fromTo("#hiw-cta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.4");
 
+        // On mobile, force-show HIW elements (GSAP fromTo sets them to opacity:0 on creation)
+        if (!isDesktop) {
+            gsap.set(["#hiw-label", "#hiw-step-1", "#hiw-step-2", "#hiw-step-3", "#hiw-step-4", "#hiw-cta", "#hiw-line"], { opacity: 1, y: 0 });
+        }
+
         // Helpers: instantly show all content in a section
         function completeChaosTl() {
             gsap.set("#chaos-header", { opacity: 1, y: 0 });
@@ -1369,6 +1228,9 @@
                 onLeave: () => gsap.to("#navbar", { autoAlpha: 1, y: 0, duration: 0.4 })
             });
 
+            // Hide HIW elements initially — only on desktop, so mobile sees them immediately
+            gsap.set(["#hiw-label", "#hiw-step-1", "#hiw-step-2", "#hiw-step-3", "#hiw-step-4", "#hiw-cta"], { opacity: 0, y: 40 });
+
         } else {
             // ── MOBILE: lightweight scroll-reveal animations, NO Locomotive, NO pin/snap ──
             const mo = (el, vars) => gsap.fromTo(el, { opacity: 0, y: vars.y ?? 30 }, {
@@ -1393,17 +1255,7 @@
                 scrollTrigger: { trigger: "#bridge-pin-container", start: "top 85%", once: true }
             });
 
-            // HIW reveals
-            mo("#hiw-label", { trigger: "#how-it-works" });
-            mo("#hiw-step-1", { trigger: "#hiw-step-1", y: 40, d: 0.9 });
-            mo("#hiw-step-2", { trigger: "#hiw-step-2", y: 40, d: 0.9 });
-            mo("#hiw-step-3", { trigger: "#hiw-step-3", y: 40, d: 0.9 });
-            mo("#hiw-step-4", { trigger: "#hiw-step-4", y: 40, d: 0.9 });
-            mo("#hiw-cta", { trigger: "#hiw-step-4", y: 20, d: 0.7 });
-            gsap.fromTo("#hiw-line", { scaleX: 0 }, {
-                scaleX: 1, duration: 1.2, ease: "power2.inOut",
-                scrollTrigger: { trigger: "#how-it-works", start: "top 95%", once: true }
-            });
+            // HIW reveals — disabled on mobile, content renders statically
 
             // Ecosystem reveals removed — rendered natively, hover transitions via CSS
 
@@ -1475,10 +1327,7 @@
                 e.preventDefault();
                 const targetId = link.getAttribute('data-nav-to');
                 navToSection(targetId);
-                // Close mobile menu if open
-                hamburger && hamburger.classList.remove('open');
-                mobileMenu && mobileMenu.classList.remove('open');
-                document.body.style.overflow = '';
+                // Navigate to section
             });
         });
 
@@ -1497,25 +1346,6 @@
             window.addEventListener('scroll', updateNavbar, { passive: true });
         }
         updateNavbar();
-
-        // ─── Hamburger / mobile menu ───
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (hamburger && mobileMenu) {
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('open');
-                mobileMenu.classList.toggle('open');
-                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-            });
-            // Close on WA link click (non-data-nav-to links)
-            mobileMenu.querySelectorAll('a:not([data-nav-to])').forEach(a => {
-                a.addEventListener('click', () => {
-                    hamburger.classList.remove('open');
-                    mobileMenu.classList.remove('open');
-                    document.body.style.overflow = '';
-                });
-            });
-        }
 
         // ─── Scroll-to-top button ───
         const scrollTopBtn = document.getElementById('scroll-top-btn');
