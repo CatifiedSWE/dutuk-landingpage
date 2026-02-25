@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dutuk | The Bridge - Connecting Two Worlds</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Locomotive Scroll -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
@@ -148,6 +149,15 @@
                 display: none;
             }
         }
+
+        /* eco-group hover (replaces Tailwind group for eco-cards) */
+        .eco-group:hover .eco-group-hover\:scale-110 {
+            transform: scale(1.1);
+        }
+
+        .eco-group:hover .eco-group-hover\:text-white {
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -158,10 +168,7 @@
     <nav id="navbar"
         class="fixed top-0 left-0 w-full z-50 luxury-nav py-6 px-8 md:px-20 flex items-center justify-between">
         <div class="flex items-center gap-4">
-            <div
-                class="w-12 h-12 bg-dutuk-maroon rounded-full flex items-center justify-center shadow-lg shadow-maroon/10">
-                <span class="text-white font-display font-bold text-xl italic leading-none">D</span>
-            </div>
+            <img src="favicon.png" alt="Dutuk Logo" class="w-12 h-12 object-contain">
             <span class="font-display font-bold text-2xl tracking-tight">Dutuk</span>
         </div>
         <div
@@ -170,13 +177,14 @@
             <a href="#" class="hover:text-dutuk-maroon transition-colors tracking-widest">The Chaos</a>
             <a href="#" class="hover:text-dutuk-maroon transition-colors tracking-widest">The Bridge</a>
         </div>
-        <a href="https://dutuk.com"
-            class="px-10 py-3 bg-dutuk-maroon text-white rounded-full font-bold text-xs uppercase tracking-widest hover:bg-dutuk-charcoal transition-all duration-500 shadow-luxury">Visit
-            Dutuk</a>
+        <a href="https://wa.me/91XXXXXXXXXX"
+            class="px-10 py-3 bg-dutuk-maroon text-white rounded-full font-bold text-xs uppercase tracking-widest hover:bg-dutuk-charcoal transition-all duration-500 shadow-luxury">WhatsApp
+            Us</a>
     </nav>
 
     <!-- Phase 1: The Vendor's Pain (Hero) -->
-    <section class="min-h-[80vh] flex items-center justify-center px-6 pt-40 pb-20 relative overflow-hidden">
+    <section data-scroll-section
+        class="min-h-[80vh] flex items-center justify-center px-6 pt-40 pb-20 relative overflow-hidden">
         <div class="max-w-4xl w-full text-center z-10">
             <div
                 class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-maroon/[0.03] text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.4em] mb-10 rounded-full border border-dutuk-maroon/5">
@@ -195,9 +203,12 @@
                 </p>
             </div>
             <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="#chaos-section"
-                    class="px-12 py-5 bg-dutuk-maroon text-white rounded-full font-display font-bold text-xl hover:bg-dutuk-charcoal transition-all duration-700 shadow-luxury">Show
-                    me the Solution</a>
+                <a href="#"
+                    class="px-12 py-5 bg-dutuk-maroon text-white rounded-full font-display font-bold text-xl hover:bg-dutuk-charcoal transition-all duration-700 shadow-luxury">Download
+                    from Playstore</a>
+                <a href="https://wa.me/91XXXXXXXXXX"
+                    class="px-12 py-5 bg-white border border-dutuk-maroon text-dutuk-maroon rounded-full font-display font-bold text-xl hover:bg-dutuk-beige transition-all duration-700 shadow-ethereal">WhatsApp
+                    Us</a>
             </div>
         </div>
 
@@ -206,7 +217,7 @@
     </section>
 
     <!-- Phase 2: The User's Chaos (Pinned Snap Scroll) -->
-    <section id="chaos-pin-container" class="relative bg-dutuk-alabaster lg:h-[300vh]">
+    <section id="chaos-pin-container" data-scroll-section class="relative bg-dutuk-alabaster lg:h-[300vh]">
         <div id="chaos-section"
             class="lg:sticky lg:top-0 lg:h-screen flex flex-col items-center justify-center lg:overflow-hidden px-6 py-10 min-h-screen">
 
@@ -310,7 +321,7 @@
 
 
     <!-- Phase 3: The Bridge (Pinned Snap Scroll) -->
-    <section id="bridge-pin-container" class="relative bg-dutuk-alabaster lg:h-[300vh]">
+    <section id="bridge-pin-container" data-scroll-section class="relative bg-dutuk-alabaster lg:h-[300vh]">
         <div id="bridge-section"
             class="lg:sticky lg:top-0 lg:h-screen flex flex-col lg:flex-row items-center justify-center gap-16 lg:overflow-hidden px-8 md:px-20 py-16 lg:py-0">
 
@@ -375,8 +386,8 @@
         </div>
     </section>
 
-    <!-- Phase 4: How It Works (3-Step Vendor Timeline) -->
-    <section id="how-it-works" class="relative bg-dutuk-alabaster lg:h-[400vh]">
+    <!-- Phase 4: How It Works (4-Step Vendor Timeline) -->
+    <section id="how-it-works" data-scroll-section class="relative bg-dutuk-alabaster lg:h-[500vh]">
         <div id="hiw-sticky"
             class="lg:sticky lg:top-0 lg:h-screen flex flex-col items-center justify-center lg:overflow-hidden px-6 md:px-20 py-20 lg:py-0">
 
@@ -392,15 +403,15 @@
             </div>
 
             <!-- Timeline Steps -->
-            <div class="relative w-full max-w-5xl mx-auto">
+            <div class="relative w-full max-w-6xl mx-auto">
 
                 <!-- Connecting line -->
-                <div class="hidden md:block absolute top-10 left-[16.6%] right-[16.6%] h-px bg-dutuk-maroon/10"
+                <div class="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-px bg-dutuk-maroon/10"
                     id="hiw-line" style="transform-origin: left; transform: scaleX(0);"></div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6">
 
-                    <!-- Step 1: Vendor Lists -->
+                    <!-- Step 1: Register -->
                     <div id="hiw-step-1" class="flex flex-col items-center text-center"
                         style="opacity:0; transform:translateY(40px);">
                         <div class="relative mb-8">
@@ -411,33 +422,17 @@
                         </div>
                         <div
                             class="inline-flex items-center gap-2 px-4 py-1 bg-dutuk-maroon/5 rounded-full text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
-                            You List
+                            Register
                         </div>
-                        <h3 class="font-display text-2xl md:text-3xl font-normal mb-4 tracking-tight">
-                            Post Your Services
+                        <h3 class="font-display text-xl md:text-2xl font-normal mb-4 tracking-tight">
+                            Register Your Business
                         </h3>
-                        <p class="text-slate-400 font-light leading-relaxed text-base">
-                            Create your vendor profile in minutes. List your event packages, set your pricing, upload
-                            your portfolio — your stage is ready.
+                        <p class="text-slate-400 font-light leading-relaxed text-sm">
+                            Create your vendor profile in minutes. List your service packages and set your pricing.
                         </p>
-                        <!-- Mini features -->
-                        <div class="mt-6 space-y-2 text-left w-full max-w-xs">
-                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
-                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/40 flex-shrink-0"></div>
-                                Packages with clear pricing
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
-                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/40 flex-shrink-0"></div>
-                                Portfolio gallery
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
-                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/40 flex-shrink-0"></div>
-                                Availability & calendar
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Step 2: Client Discovers -->
+                    <!-- Step 2: Receive Leads -->
                     <div id="hiw-step-2" class="flex flex-col items-center text-center"
                         style="opacity:0; transform:translateY(40px);">
                         <div class="relative mb-8">
@@ -448,65 +443,57 @@
                         </div>
                         <div
                             class="inline-flex items-center gap-2 px-4 py-1 bg-slate-400/10 rounded-full text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
-                            They Discover
+                            Inquiries
                         </div>
-                        <h3 class="font-display text-2xl md:text-3xl font-normal mb-4 tracking-tight">
-                            Clients Search &amp; Book
+                        <h3 class="font-display text-xl md:text-2xl font-normal mb-4 tracking-tight">
+                            Receive Event Leads
                         </h3>
-                        <p class="text-slate-400 font-light leading-relaxed text-base">
-                            Clients browse by category, budget, and location. They view your profile, compare options,
-                            and send you a booking request directly.
+                        <p class="text-slate-400 font-light leading-relaxed text-sm">
+                            Get genuine leads and inquiries from customers in Chennai who are actively planning events.
                         </p>
-                        <div class="mt-6 space-y-2 text-left w-full max-w-xs">
-                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
-                                <div class="w-1 h-1 rounded-full bg-slate-400/50 flex-shrink-0"></div>
-                                Browse by city &amp; category
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
-                                <div class="w-1 h-1 rounded-full bg-slate-400/50 flex-shrink-0"></div>
-                                Compare multiple vendors
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
-                                <div class="w-1 h-1 rounded-full bg-slate-400/50 flex-shrink-0"></div>
-                                Direct booking request
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Step 3: Both Connect -->
+                    <!-- Step 3: Confirm -->
                     <div id="hiw-step-3" class="flex flex-col items-center text-center"
                         style="opacity:0; transform:translateY(40px);">
                         <div class="relative mb-8">
                             <div
+                                class="w-20 h-20 rounded-full bg-dutuk-maroon/8 border border-dutuk-maroon/15 flex items-center justify-center mb-4 mx-auto">
+                                <span class="font-display text-3xl font-normal text-dutuk-maroon italic">3</span>
+                            </div>
+                        </div>
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1 bg-dutuk-maroon/5 rounded-full text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
+                            Connect
+                        </div>
+                        <h3 class="font-display text-xl md:text-2xl font-normal mb-4 tracking-tight">
+                            Confirm & Provide
+                        </h3>
+                        <p class="text-slate-400 font-light leading-relaxed text-sm">
+                            Connect directly with the client, finalize the booking, and deliver your exceptional
+                            service.
+                        </p>
+                    </div>
+
+                    <!-- Step 4: Pay/Grow -->
+                    <div id="hiw-step-4" class="flex flex-col items-center text-center"
+                        style="opacity:0; transform:translateY(40px);">
+                        <div class="relative mb-8">
+                            <div
                                 class="w-20 h-20 rounded-full bg-dutuk-maroon flex items-center justify-center mb-4 mx-auto shadow-lg shadow-dutuk-maroon/20">
-                                <span class="font-display text-3xl font-normal text-white italic">3</span>
+                                <span class="font-display text-3xl font-normal text-white italic">4</span>
                             </div>
                         </div>
                         <div
                             class="inline-flex items-center gap-2 px-4 py-1 bg-dutuk-maroon/10 rounded-full text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
-                            You Connect
+                            Grow
                         </div>
-                        <h3 class="font-display text-2xl md:text-3xl font-normal mb-4 tracking-tight">
-                            Accept. Deliver. Grow.
+                        <h3 class="font-display text-xl md:text-2xl font-normal mb-4 tracking-tight">
+                            Get Paid & Grow
                         </h3>
-                        <p class="text-slate-400 font-light leading-relaxed text-base">
-                            You review the request and accept or decline. Once confirmed, both sides are connected. You
-                            deliver the magic, they leave a review.
+                        <p class="text-slate-400 font-light leading-relaxed text-sm">
+                            Earn your fee, build your reputation with reviews, and watch your business visibility grow.
                         </p>
-                        <div class="mt-6 space-y-2 text-left w-full max-w-xs">
-                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
-                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/60 flex-shrink-0"></div>
-                                Accept or decline requests
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
-                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/60 flex-shrink-0"></div>
-                                In-app chat with client
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-dutuk-charcoal/60">
-                                <div class="w-1 h-1 rounded-full bg-dutuk-maroon/60 flex-shrink-0"></div>
-                                Earn reviews &amp; grow
-                            </div>
-                        </div>
                     </div>
 
                 </div>
@@ -519,9 +506,227 @@
         </div>
     </section>
 
+    <!-- Phase 5: Who Can Join (The Ecosystem) -->
+    <section id="ecosystem-section" data-scroll-section class="py-32 bg-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-8 md:px-20 text-center relative z-10">
+            <div
+                class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-maroon/[0.03] text-dutuk-maroon text-[10px] font-bold uppercase tracking-[0.4em] mb-10 rounded-full border border-dutuk-maroon/5">
+                Stage 05: The Ecosystem
+            </div>
+            <h2 class="font-display text-4xl md:text-6xl font-normal mb-20 tracking-tight">
+                Who can join <span class="serif-italic">the circle?</span>
+            </h2>
 
-    <!-- Phase 4: Resolution (Membership) -->
-    <section id="resolution-section" class="py-40 px-6">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Ecosystem cards -->
+                <div
+                    class="eco-card p-10 bg-dutuk-beige rounded-[2.5rem] border border-dutuk-maroon/5 flex flex-col items-center justify-center gap-6 eco-group hover:bg-dutuk-maroon transition-all duration-700">
+                    <div
+                        class="w-16 h-16 rounded-full bg-white flex items-center justify-center eco-group-hover:scale-110 transition-transform duration-500">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v2" />
+                            <path d="M12 18v4" />
+                            <path d="M4.93 4.93l1.41 1.41" />
+                            <path d="M17.66 17.66l1.41 1.41" />
+                            <path d="M2 12h2" />
+                            <path d="M20 12h2" />
+                            <path d="M4.93 19.07l1.41-1.41" />
+                            <path d="M17.66 6.34l1.41-1.41" />
+                            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                        </svg>
+                    </div>
+                    <span
+                        class="text-xs uppercase font-bold tracking-[0.2em] eco-group-hover:text-white transition-colors">Catering</span>
+                </div>
+                <div
+                    class="eco-card p-10 bg-dutuk-beige rounded-[2.5rem] border border-dutuk-maroon/5 flex flex-col items-center justify-center gap-6 eco-group hover:bg-dutuk-maroon transition-all duration-700">
+                    <div
+                        class="w-16 h-16 rounded-full bg-white flex items-center justify-center eco-group-hover:scale-110 transition-transform duration-500">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                            <path d="M12 7v5l3 3" />
+                        </svg>
+                    </div>
+                    <span
+                        class="text-xs uppercase font-bold tracking-[0.2em] eco-group-hover:text-white transition-colors">Decoration</span>
+                </div>
+                <div
+                    class="eco-card p-10 bg-dutuk-beige rounded-[2.5rem] border border-dutuk-maroon/5 flex flex-col items-center justify-center gap-6 eco-group hover:bg-dutuk-maroon transition-all duration-700">
+                    <div
+                        class="w-16 h-16 rounded-full bg-white flex items-center justify-center eco-group-hover:scale-110 transition-transform duration-500">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                            <circle cx="12" cy="13" r="4" />
+                        </svg>
+                    </div>
+                    <span
+                        class="text-xs uppercase font-bold tracking-[0.2em] eco-group-hover:text-white transition-colors">Photography</span>
+                </div>
+                <div
+                    class="eco-card p-10 bg-dutuk-beige rounded-[2.5rem] border border-dutuk-maroon/5 flex flex-col items-center justify-center gap-6 eco-group hover:bg-dutuk-maroon transition-all duration-700">
+                    <div
+                        class="w-16 h-16 rounded-full bg-white flex items-center justify-center eco-group-hover:scale-110 transition-transform duration-500">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18V5l12-2v13" />
+                            <circle cx="6" cy="18" r="3" />
+                            <circle cx="18" cy="16" r="3" />
+                        </svg>
+                    </div>
+                    <span
+                        class="text-xs uppercase font-bold tracking-[0.2em] eco-group-hover:text-white transition-colors">Entertainment</span>
+                </div>
+                <div
+                    class="eco-card p-10 bg-dutuk-beige rounded-[2.5rem] border border-dutuk-maroon/5 flex flex-col items-center justify-center gap-6 eco-group hover:bg-dutuk-maroon transition-all duration-700">
+                    <div
+                        class="w-16 h-16 rounded-full bg-white flex items-center justify-center eco-group-hover:scale-110 transition-transform duration-500">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                    </div>
+                    <span
+                        class="text-xs uppercase font-bold tracking-[0.2em] eco-group-hover:text-white transition-colors">Event
+                        Planners</span>
+                </div>
+                <div
+                    class="eco-card p-10 bg-dutuk-beige rounded-[2.5rem] border border-dutuk-maroon/5 flex flex-col items-center justify-center gap-6 eco-group hover:bg-dutuk-maroon transition-all duration-700">
+                    <div
+                        class="w-16 h-16 rounded-full bg-white flex items-center justify-center eco-group-hover:scale-110 transition-transform duration-500">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21h18" />
+                            <path d="M9 8h1" />
+                            <path d="M9 12h1" />
+                            <path d="M9 16h1" />
+                            <path d="M14 8h1" />
+                            <path d="M14 12h1" />
+                            <path d="M14 16h1" />
+                            <path d="M5 21V3.9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2V21" />
+                        </svg>
+                    </div>
+                    <span
+                        class="text-xs uppercase font-bold tracking-[0.2em] eco-group-hover:text-white transition-colors">Venues</span>
+                </div>
+                <div
+                    class="eco-card p-10 bg-dutuk-beige rounded-[2.5rem] border border-dutuk-maroon/5 flex flex-col items-center justify-center gap-6 eco-group hover:bg-dutuk-maroon transition-all duration-700">
+                    <div
+                        class="w-16 h-16 rounded-full bg-white flex items-center justify-center eco-group-hover:scale-110 transition-transform duration-500">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 4L5 18" />
+                            <path d="M15 3l6 6" />
+                            <path d="M3 15l6 6" />
+                        </svg>
+                    </div>
+                    <span
+                        class="text-xs uppercase font-bold tracking-[0.2em] eco-group-hover:text-white transition-colors">Makeup
+                        Artists</span>
+                </div>
+                <div
+                    class="eco-card p-10 bg-dutuk-beige rounded-[2.5rem] border border-dutuk-maroon/5 flex flex-col items-center justify-center gap-6 eco-group hover:bg-dutuk-maroon transition-all duration-700">
+                    <div
+                        class="w-16 h-16 rounded-full bg-white flex items-center justify-center eco-group-hover:scale-110 transition-transform duration-500">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#800000" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="1" />
+                            <circle cx="19" cy="12" r="1" />
+                            <circle cx="5" cy="12" r="1" />
+                        </svg>
+                    </div>
+                    <span
+                        class="text-xs uppercase font-bold tracking-[0.2em] eco-group-hover:text-white transition-colors">Others</span>
+                </div>
+            </div>
+            <p class="mt-20 text-slate-400 italic">And many others. If you provide a service for events, you belong
+                here.</p>
+        </div>
+    </section>
+
+    <!-- Phase 6: Why Join (The Advantage) -->
+    <section id="advantage-section" data-scroll-section class="py-40 bg-dutuk-alabaster overflow-hidden">
+        <div class="max-w-7xl mx-auto px-8 md:px-20">
+            <div class="text-center mb-24">
+                <div
+                    class="inline-flex items-center gap-3 px-6 py-2 bg-dutuk-charcoal/5 text-dutuk-charcoal text-[10px] font-bold uppercase tracking-[0.4em] mb-8 rounded-full">
+                    Stage 06: The Advantage
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-normal tracking-tight">
+                    Why vendors <span class="serif-italic text-dutuk-maroon">choose Dutuk.</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+                <!-- Without Dutuk -->
+                <div
+                    class="p-12 md:p-16 rounded-[4rem] bg-white shadow-ethereal border border-dutuk-maroon/5 relative overflow-hidden group">
+                    <div class="flex items-center gap-4 mb-10">
+                        <div
+                            class="w-10 h-10 rounded-full bg-red-50 text-red-500 flex items-center justify-center text-sm">
+                            ✕</div>
+                        <h3 class="font-display text-3xl italic">Without Dutuk</h3>
+                    </div>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4 text-slate-500">
+                            <span class="text-red-400 mt-1">•</span> Irregular or seasonal bookings that slow your
+                            growth
+                        </li>
+                        <li class="flex items-start gap-4 text-slate-500">
+                            <span class="text-red-400 mt-1">•</span> Heavy dependence on agents and expensive middlemen
+                        </li>
+                        <li class="flex items-start gap-4 text-slate-500">
+                            <span class="text-red-400 mt-1">•</span> Constant price bargaining and exhaustion of time
+                            waste
+                        </li>
+                        <li class="flex items-start gap-4 text-slate-500">
+                            <span class="text-red-400 mt-1">•</span> Difficulty in reaching high-quality, verified
+                            customers
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- With Dutuk -->
+                <div
+                    class="p-12 md:p-16 rounded-[4rem] bg-dutuk-maroon text-white shadow-luxury border border-white/10 relative overflow-hidden group">
+                    <div class="flex items-center gap-4 mb-10">
+                        <div
+                            class="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center text-sm">
+                            ✓</div>
+                        <h3 class="font-display text-3xl italic">With Dutuk</h3>
+                    </div>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4 text-white/80">
+                            <span class="text-white mt-1">•</span> Direct customer leads delivered straight to your
+                            dashboard
+                        </li>
+                        <li class="flex items-start gap-4 text-white/80">
+                            <span class="text-white mt-1">•</span> Higher frequency of bookings consistently every month
+                        </li>
+                        <li class="flex items-start gap-4 text-white/80">
+                            <span class="text-white mt-1">•</span> Verified customer requests with clear budget
+                            expectations
+                        </li>
+                        <li class="flex items-start gap-4 text-white/80">
+                            <span class="text-white mt-1">•</span> Build ultimate trust using authentic ratings &
+                            reviews
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Phase 7: Resolution (Membership) -->
+    <section id="resolution-section" data-scroll-section class="py-40 px-6">
         <div class="max-w-6xl mx-auto rounded-[5rem] relative group shadow-ethereal">
             <div
                 class="absolute inset-0 bg-dutuk-maroon opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-1000">
@@ -537,9 +742,9 @@
                 </div>
 
                 <div id="resolution-ctas" class="flex flex-col md:flex-row items-center justify-center gap-6">
-                    <a href="https://dutuk.com"
+                    <a href="https://wa.me/91XXXXXXXXXX"
                         class="group relative px-12 py-6 bg-dutuk-charcoal text-white font-display font-medium text-xl rounded-full shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full md:w-auto">
-                        <span class="relative z-10">Cross the Bridge</span>
+                        <span class="relative z-10">WhatsApp Us</span>
                         <div
                             class="absolute inset-0 bg-dutuk-maroon translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out">
                         </div>
@@ -574,14 +779,11 @@
 
 
     <!-- Footer -->
-    <footer class="py-32 px-8 md:px-20 bg-dutuk-beige border-t border-dutuk-maroon/5">
+    <footer data-scroll-section class="py-32 px-8 md:px-20 bg-dutuk-beige border-t border-dutuk-maroon/5">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16">
             <div>
                 <div class="flex items-center gap-5 mb-12">
-                    <div
-                        class="w-14 h-14 bg-dutuk-maroon rounded-full flex items-center justify-center shadow-lg shadow-maroon/10">
-                        <span class="text-white font-display font-bold text-2xl italic leading-none">D</span>
-                    </div>
+                    <img src="favicon.png" alt="Dutuk Logo" class="w-14 h-14 object-contain">
                     <span class="font-display font-bold text-4xl tracking-tighter">Dutuk</span>
                 </div>
                 <p class="text-2xl font-light text-slate-400 serif-italic">Connecting two worlds properly.</p>
@@ -721,7 +923,9 @@
         const hiwStep2Tl = gsap.timeline({ paused: true })
             .fromTo("#hiw-step-2", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
         const hiwStep3Tl = gsap.timeline({ paused: true })
-            .fromTo("#hiw-step-3", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" })
+            .fromTo("#hiw-step-3", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
+        const hiwStep4Tl = gsap.timeline({ paused: true })
+            .fromTo("#hiw-step-4", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" })
             .fromTo("#hiw-cta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.4");
 
         // Helpers: instantly show all content in a section
@@ -745,6 +949,7 @@
             gsap.set("#hiw-step-1", { opacity: 1, y: 0 });
             gsap.set("#hiw-step-2", { opacity: 1, y: 0 });
             gsap.set("#hiw-step-3", { opacity: 1, y: 0 });
+            gsap.set("#hiw-step-4", { opacity: 1, y: 0 });
             gsap.set("#hiw-cta", { opacity: 1, y: 0 });
         }
 
@@ -792,7 +997,7 @@
                 trigger: "#how-it-works", ...scrollerOpts,
                 start: "top top", end: "bottom bottom",
                 pin: "#hiw-sticky", pinType: "transform",
-                snap: { snapTo: 1 / 4, duration: { min: 0.3, max: 0.6 }, delay: 0.05, ease: "power2.inOut" }
+                snap: { snapTo: 1 / 5, duration: { min: 0.3, max: 0.6 }, delay: 0.05, ease: "power2.inOut" }
             });
             ScrollTrigger.create({
                 trigger: "#how-it-works", ...scrollerOpts, start: "top 60%",
@@ -800,19 +1005,24 @@
                 onLeaveBack: () => hiwLabelTl.reverse()
             });
             ScrollTrigger.create({
-                trigger: "#how-it-works", ...scrollerOpts, start: "25% top",
+                trigger: "#how-it-works", ...scrollerOpts, start: "20% top",
                 onEnter: () => hiwStep1Tl.play(),
                 onLeaveBack: () => hiwStep1Tl.reverse()
             });
             ScrollTrigger.create({
-                trigger: "#how-it-works", ...scrollerOpts, start: "50% top",
+                trigger: "#how-it-works", ...scrollerOpts, start: "40% top",
                 onEnter: () => hiwStep2Tl.play(),
                 onLeaveBack: () => hiwStep2Tl.reverse()
             });
             ScrollTrigger.create({
-                trigger: "#how-it-works", ...scrollerOpts, start: "75% top",
+                trigger: "#how-it-works", ...scrollerOpts, start: "60% top",
                 onEnter: () => hiwStep3Tl.play(),
-                onLeaveBack: () => hiwStep3Tl.reverse(),
+                onLeaveBack: () => hiwStep3Tl.reverse()
+            });
+            ScrollTrigger.create({
+                trigger: "#how-it-works", ...scrollerOpts, start: "80% top",
+                onEnter: () => hiwStep4Tl.play(),
+                onLeaveBack: () => hiwStep4Tl.reverse(),
                 onLeave: () => gsap.to("#navbar", { autoAlpha: 1, y: 0, duration: 0.4 })
             });
 
@@ -845,16 +1055,25 @@
             mo("#hiw-step-1", { trigger: "#hiw-step-1", y: 40, d: 0.9 });
             mo("#hiw-step-2", { trigger: "#hiw-step-2", y: 40, d: 0.9 });
             mo("#hiw-step-3", { trigger: "#hiw-step-3", y: 40, d: 0.9 });
-            mo("#hiw-cta", { trigger: "#hiw-step-3", y: 20, d: 0.7 });
+            mo("#hiw-step-4", { trigger: "#hiw-step-4", y: 40, d: 0.9 });
+            mo("#hiw-cta", { trigger: "#hiw-step-4", y: 20, d: 0.7 });
             gsap.fromTo("#hiw-line", { scaleX: 0 }, {
                 scaleX: 1, duration: 1.2, ease: "power2.inOut",
                 scrollTrigger: { trigger: "#how-it-works", start: "top 95%", once: true }
+            });
+
+            // Ecosystem reveals removed — rendered natively, hover transitions via CSS
+
+            // Advantage reveals
+            gsap.from("#advantage-section h2, #advantage-section .grid > div", {
+                scrollTrigger: { trigger: "#advantage-section", start: "top 95%", once: true },
+                y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power3.out"
             });
         }
 
 
         // ── 6. Global Alive Reveals (skip pinned sections) ────────
-        const pinnedIds = new Set(['chaos-pin-container', 'bridge-pin-container', 'how-it-works', 'resolution-section']);
+        const pinnedIds = new Set(['chaos-pin-container', 'bridge-pin-container', 'how-it-works', 'resolution-section', 'advantage-section']);
         gsap.utils.toArray('section').forEach(section => {
             if (pinnedIds.has(section.id)) return;
             gsap.from(section.querySelectorAll('h2, p, .group'), {
@@ -862,6 +1081,16 @@
                 y: 50, opacity: 0, duration: 2, stagger: 0.2, ease: "power4.out"
             });
         });
+
+        if (isDesktop) {
+            // Ecosystem reveals - Desktop (rendered natively, hover via CSS)
+
+            // Advantage reveals - Desktop
+            gsap.from("#advantage-section h2, #advantage-section .grid > div", {
+                scrollTrigger: { trigger: "#advantage-section", ...scrollerOpts, start: "top 90%", once: true },
+                y: 30, opacity: 0, duration: 0.7, stagger: 0.12, ease: "power3.out"
+            });
+        }
 
         // Dedicated Resolution section animation
         gsap.from("#resolution-section h2, #resolution-section p, #resolution-section #resolution-ctas", {
@@ -880,6 +1109,10 @@
 
         // Final refresh — MUST be last
         ScrollTrigger.refresh();
+        setTimeout(() => {
+            ScrollTrigger.refresh();
+            if (locoScroll) locoScroll.update();
+        }, 200);
 
     </script>
 </body>
