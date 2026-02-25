@@ -56,11 +56,221 @@
             transform: translateZ(0);
         }
 
-        .luxury-nav {
-            background: rgba(253, 251, 247, 0.8);
+        /* ─── Floating Pill Navbar ─── */
+        #navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            width: auto;
+            max-width: calc(100vw - 48px);
+            padding: 12px 20px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: transparent;
+            border: 1px solid transparent;
+            transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, padding 0.4s ease;
+            white-space: nowrap;
+        }
+
+        #navbar.scrolled {
+            background: rgba(253, 251, 247, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-color: rgba(128, 0, 0, 0.08);
+            box-shadow: 0 8px 40px -12px rgba(26, 26, 26, 0.12), 0 2px 8px -4px rgba(128, 0, 0, 0.06);
+        }
+
+        .nav-links a {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            color: rgba(26, 26, 26, 0.45);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding: 4px 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #800000;
+            transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .nav-links a:hover {
+            color: #800000;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 14px;
+            background: rgba(26, 26, 26, 0.12);
+            margin: 0 20px;
+        }
+
+        /* CTA pill inside navbar */
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            background: #800000;
+            color: #fff;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            text-decoration: none;
+            transition: background 0.4s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+            box-shadow: 0 4px 18px -6px rgba(128, 0, 0, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #1A1A1A;
+            transform: translateY(100%);
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+            border-radius: inherit;
+        }
+
+        .nav-cta:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 28px -8px rgba(128, 0, 0, 0.4);
+        }
+
+        .nav-cta:hover::before {
+            transform: translateY(0);
+        }
+
+        .nav-cta span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Mobile hamburger */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 20px;
+            height: 1.5px;
+            background: #1A1A1A;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .nav-hamburger.open span:nth-child(1) {
+            transform: translateY(6.5px) rotate(45deg);
+        }
+
+        .nav-hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-hamburger.open span:nth-child(3) {
+            transform: translateY(-6.5px) rotate(-45deg);
+        }
+
+        /* Mobile drawer */
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(253, 251, 247, 0.97);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(128, 0, 0, 0.03);
+            z-index: 45;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #mobile-menu a {
+            font-size: 28px;
+            font-family: 'Playfair Display', serif;
+            color: #1A1A1A;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s ease;
+        }
+
+        #mobile-menu.open a {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #mobile-menu.open a:nth-child(1) {
+            transition-delay: 0.05s;
+        }
+
+        #mobile-menu.open a:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+
+        #mobile-menu.open a:nth-child(3) {
+            transition-delay: 0.15s;
+        }
+
+        #mobile-menu.open a:nth-child(4) {
+            transition-delay: 0.2s;
+        }
+
+        #mobile-menu a:hover {
+            color: #800000;
+        }
+
+        @media (max-width: 767px) {
+            #navbar {
+                padding: 10px 16px;
+                max-width: calc(100vw - 32px);
+                top: 16px;
+            }
+
+            .nav-links,
+            .nav-divider {
+                display: none !important;
+            }
+
+            .nav-hamburger {
+                display: flex;
+            }
         }
 
         .serif-italic {
@@ -108,7 +318,6 @@
             height: 108px;
         }
 
-
         /* The Bridge Visual */
         .bridge-path {
             stroke-dasharray: 1000;
@@ -137,13 +346,6 @@
                 display: none;
             }
 
-            /* Replace expensive backdrop-filter with solid bg */
-            .luxury-nav {
-                background: rgba(253, 251, 247, 0.97);
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
-            }
-
             /* Hide chaos dots on mobile */
             .chaos-dot {
                 display: none;
@@ -158,32 +360,158 @@
         .eco-group:hover .eco-group-hover\:text-white {
             color: #fff;
         }
+
+        /* Coming Soon badge on Playstore button */
+        .coming-soon-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #800000;
+            color: #fff;
+            font-size: 7px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 3px 7px;
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        /* Hero WhatsApp button — sliding maroon fill on hover */
+        #hero-wa-btn {
+            position: relative;
+        }
+
+        .hero-wa-fill {
+            position: absolute;
+            inset: 0;
+            background: #800000;
+            border-radius: inherit;
+            transform: translateY(100%);
+            transition: transform 0.42s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 0;
+        }
+
+        #hero-wa-btn:hover .hero-wa-fill {
+            transform: translateY(0);
+        }
+
+        #hero-wa-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 12px 40px -12px rgba(128, 0, 0, 0.38) !important;
+            border-color: #800000;
+            color: #fff;
+        }
+
+        #hero-wa-btn:hover span:last-child {
+            color: #fff;
+        }
+
+        /* Scroll-to-top button */
+        #scroll-top-btn {
+            position: fixed;
+            bottom: 36px;
+            right: 36px;
+            z-index: 9000;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #800000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px -8px rgba(128, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.12);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px) scale(0.85);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #scroll-top-btn.visible {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0) scale(1);
+        }
+
+        #scroll-top-btn:hover {
+            background: #1A1A1A;
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0 14px 40px -10px rgba(26, 26, 26, 0.35);
+        }
+
+        #scroll-top-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        #scroll-top-btn:hover svg {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 767px) {
+            #scroll-top-btn {
+                bottom: 24px;
+                right: 20px;
+                width: 44px;
+                height: 44px;
+            }
+        }
     </style>
 </head>
 
 <body class="bg-dutuk-beige text-dutuk-charcoal font-sans antialiased overflow-x-hidden" data-scroll-container>
     <div class="noise"></div>
 
-    <!-- Header / Navbar -->
-    <nav id="navbar"
-        class="fixed top-0 left-0 w-full z-50 luxury-nav py-6 px-8 md:px-20 flex items-center justify-between">
-        <div class="flex items-center gap-4">
-            <img src="favicon.png" alt="Dutuk Logo" class="w-12 h-12 object-contain">
-            <span class="font-display font-bold text-2xl tracking-tight">Dutuk</span>
+    <!-- Header / Navbar - Floating Pill -->
+    <nav id="navbar">
+        <!-- Logo -->
+        <a href="/"
+            style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;margin-right:28px;">
+            <img src="favicon.png" alt="Dutuk Logo" style="width:32px;height:32px;object-fit:contain;">
+            <span
+                style="font-family:'Playfair Display',serif;font-weight:700;font-size:18px;letter-spacing:-0.02em;color:#1A1A1A;">Dutuk</span>
+        </a>
+
+        <!-- Desktop nav links -->
+        <div class="nav-links" style="display:flex;align-items:center;gap:28px;">
+            <a href="#" data-nav-to="hero-section">The Pain</a>
+            <a href="#" data-nav-to="chaos-pin-container">The Chaos</a>
+            <a href="#" data-nav-to="bridge-pin-container">The Bridge</a>
         </div>
-        <div
-            class="hidden md:flex items-center gap-12 font-medium text-[10px] uppercase tracking-[0.3em] text-dutuk-charcoal/40">
-            <a href="#" class="hover:text-dutuk-maroon transition-colors tracking-widest">The Pain</a>
-            <a href="#" class="hover:text-dutuk-maroon transition-colors tracking-widest">The Chaos</a>
-            <a href="#" class="hover:text-dutuk-maroon transition-colors tracking-widest">The Bridge</a>
-        </div>
-        <a href="https://wa.me/91XXXXXXXXXX"
-            class="px-10 py-3 bg-dutuk-maroon text-white rounded-full font-bold text-xs uppercase tracking-widest hover:bg-dutuk-charcoal transition-all duration-500 shadow-luxury">WhatsApp
-            Us</a>
+
+        <!-- Divider -->
+        <div class="nav-divider"></div>
+
+        <!-- WhatsApp CTA -->
+        <a href="https://wa.me/919XXXXXXXXX" class="nav-cta">
+            <!-- WhatsApp icon -->
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"
+                style="position:relative;z-index:1;flex-shrink:0;" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            <span>WhatsApp Us</span>
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button id="hamburger" class="nav-hamburger" aria-label="Menu"
+            style="margin-left:12px;background:none;border:none;">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
 
+    <!-- Mobile full-screen menu -->
+    <div id="mobile-menu">
+        <a href="#" data-nav-to="hero-section">The Pain</a>
+        <a href="#" data-nav-to="chaos-pin-container">The Chaos</a>
+        <a href="#" data-nav-to="bridge-pin-container">The Bridge</a>
+        <a href="https://wa.me/919XXXXXXXXX" style="color:#800000;font-size:18px;">WhatsApp Us ↗</a>
+    </div>
+
     <!-- Phase 1: The Vendor's Pain (Hero) -->
-    <section data-scroll-section
+    <section id="hero-section" data-scroll-section
         class="min-h-[80vh] flex items-center justify-center px-6 pt-40 pb-20 relative overflow-hidden">
         <div class="max-w-4xl w-full text-center z-10">
             <div
@@ -196,19 +524,31 @@
                 <span class="serif-italic text-dutuk-maroon">new orders?</span>
             </h1>
             <div id="vendor-subtext"
-                class="text-xl md:text-2xl font-light text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed space-y-6">
+                class="text-xl md:text-2xl font-light text-dutuk-charcoal/70 mb-12 max-w-2xl mx-auto leading-relaxed space-y-6">
                 <p>Most vendors wait for phone calls that never come. They rely on "WhatsApp Status" and referral luck.
                 </p>
-                <p class="text-dutuk-charcoal font-medium italic">They have the skill. They just don't have the stage.
+                <p class="text-dutuk-charcoal font-semibold italic">They have the skill. They just don't have the stage.
                 </p>
             </div>
             <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="#"
-                    class="px-12 py-5 bg-dutuk-maroon text-white rounded-full font-display font-bold text-xl hover:bg-dutuk-charcoal transition-all duration-700 shadow-luxury">Download
-                    from Playstore</a>
-                <a href="https://wa.me/91XXXXXXXXXX"
-                    class="px-12 py-5 bg-white border border-dutuk-maroon text-dutuk-maroon rounded-full font-display font-bold text-xl hover:bg-dutuk-beige transition-all duration-700 shadow-ethereal">WhatsApp
-                    Us</a>
+                <a href="#coming-soon" onclick="return false;"
+                    class="relative px-12 py-5 bg-dutuk-maroon text-white rounded-full font-display font-bold text-xl hover:bg-dutuk-charcoal transition-all duration-700 shadow-luxury opacity-80 cursor-not-allowed">
+                    <span class="coming-soon-badge">Coming Soon</span>
+                    Download from Playstore
+                </a>
+                <a href="https://wa.me/919XXXXXXXXX" id="hero-wa-btn"
+                    class="group relative px-12 py-5 bg-white border border-dutuk-maroon text-dutuk-maroon rounded-full font-display font-bold text-xl shadow-ethereal overflow-hidden"
+                    style="display:inline-flex;align-items:center;justify-content:center;transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease;">
+                    <span class="hero-wa-fill" aria-hidden="true"></span>
+                    <span
+                        style="position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;transition:color 0.35s ease;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        WhatsApp Us
+                    </span>
+                </a>
             </div>
         </div>
 
@@ -269,13 +609,14 @@
                         </h2>
                     </div>
                     <div id="chaos-desc" class="mt-6" style="opacity:0;transform:translateY(20px);">
-                        <p class="text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-md mx-auto">
+                        <p
+                            class="text-lg md:text-xl text-dutuk-charcoal/65 font-normal leading-relaxed max-w-md mx-auto">
                             They don't know who to trust. They have no clear pricing. <br>
-                            <span class="text-dutuk-charcoal font-medium italic">They are exhausted before the event
+                            <span class="text-dutuk-charcoal font-semibold italic">They are exhausted before the event
                                 even begins.</span>
                         </p>
                         <div class="mt-10 flex flex-col items-center gap-2">
-                            <span class="text-[9px] tracking-[0.45em] uppercase text-dutuk-charcoal/35">Discover The
+                            <span class="text-[9px] tracking-[0.45em] uppercase text-dutuk-charcoal/55">Discover The
                                 Cure</span>
                             <div class="w-px h-10 bg-gradient-to-b from-dutuk-maroon/20 to-dutuk-maroon rounded-full">
                             </div>
@@ -361,7 +702,7 @@
                 <h2 class="font-display text-4xl md:text-7xl font-bold leading-tight mb-6 md:mb-8 tracking-tight">
                     We build the <span class="serif-italic text-dutuk-maroon">Bridge.</span>
                 </h2>
-                <p class="text-sm md:text-lg font-light text-slate-500 mb-8 md:mb-12 leading-relaxed">
+                <p class="text-sm md:text-lg font-normal text-dutuk-charcoal/70 mb-8 md:mb-12 leading-relaxed">
                     Dutuk is the structural connection. We take the hidden talent and the desperate client and bring
                     them to one single table.
                 </p>
@@ -427,7 +768,7 @@
                         <h3 class="font-display text-xl md:text-2xl font-normal mb-4 tracking-tight">
                             Register Your Business
                         </h3>
-                        <p class="text-slate-400 font-light leading-relaxed text-sm">
+                        <p class="text-dutuk-charcoal/65 font-normal leading-relaxed text-sm">
                             Create your vendor profile in minutes. List your service packages and set your pricing.
                         </p>
                     </div>
@@ -448,7 +789,7 @@
                         <h3 class="font-display text-xl md:text-2xl font-normal mb-4 tracking-tight">
                             Receive Event Leads
                         </h3>
-                        <p class="text-slate-400 font-light leading-relaxed text-sm">
+                        <p class="text-dutuk-charcoal/65 font-normal leading-relaxed text-sm">
                             Get genuine leads and inquiries from customers in Chennai who are actively planning events.
                         </p>
                     </div>
@@ -469,7 +810,7 @@
                         <h3 class="font-display text-xl md:text-2xl font-normal mb-4 tracking-tight">
                             Confirm & Provide
                         </h3>
-                        <p class="text-slate-400 font-light leading-relaxed text-sm">
+                        <p class="text-dutuk-charcoal/65 font-normal leading-relaxed text-sm">
                             Connect directly with the client, finalize the booking, and deliver your exceptional
                             service.
                         </p>
@@ -491,7 +832,7 @@
                         <h3 class="font-display text-xl md:text-2xl font-normal mb-4 tracking-tight">
                             Get Paid & Grow
                         </h3>
-                        <p class="text-slate-400 font-light leading-relaxed text-sm">
+                        <p class="text-dutuk-charcoal/65 font-normal leading-relaxed text-sm">
                             Earn your fee, build your reputation with reviews, and watch your business visibility grow.
                         </p>
                     </div>
@@ -501,7 +842,7 @@
 
             <!-- CTA nudge -->
             <div id="hiw-cta" class="mt-16 text-center" style="opacity:0; transform:translateY(20px);">
-                <p class="text-dutuk-charcoal/40 text-sm font-light italic">Simple. Structured. Built for you.</p>
+                <p class="text-dutuk-charcoal/60 text-sm font-medium italic">Simple. Structured. Built for you.</p>
             </div>
         </div>
     </section>
@@ -645,7 +986,8 @@
                         class="text-xs uppercase font-bold tracking-[0.2em] eco-group-hover:text-white transition-colors">Others</span>
                 </div>
             </div>
-            <p class="mt-20 text-slate-400 italic">And many others. If you provide a service for events, you belong
+            <p class="mt-20 text-dutuk-charcoal/60 font-medium italic">And many others. If you provide a service for
+                events, you belong
                 here.</p>
         </div>
     </section>
@@ -674,19 +1016,23 @@
                         <h3 class="font-display text-3xl italic">Without Dutuk</h3>
                     </div>
                     <ul class="space-y-6">
-                        <li class="flex items-start gap-4 text-slate-500">
-                            <span class="text-red-400 mt-1">•</span> Irregular or seasonal bookings that slow your
+                        <li class="flex items-start gap-4 text-dutuk-charcoal/75 font-normal">
+                            <span class="text-red-500 mt-1 font-bold">•</span> Irregular or seasonal bookings that slow
+                            your
                             growth
                         </li>
-                        <li class="flex items-start gap-4 text-slate-500">
-                            <span class="text-red-400 mt-1">•</span> Heavy dependence on agents and expensive middlemen
+                        <li class="flex items-start gap-4 text-dutuk-charcoal/75 font-normal">
+                            <span class="text-red-500 mt-1 font-bold">•</span> Heavy dependence on agents and expensive
+                            middlemen
                         </li>
-                        <li class="flex items-start gap-4 text-slate-500">
-                            <span class="text-red-400 mt-1">•</span> Constant price bargaining and exhaustion of time
+                        <li class="flex items-start gap-4 text-dutuk-charcoal/75 font-normal">
+                            <span class="text-red-500 mt-1 font-bold">•</span> Constant price bargaining and exhaustion
+                            of time
                             waste
                         </li>
-                        <li class="flex items-start gap-4 text-slate-500">
-                            <span class="text-red-400 mt-1">•</span> Difficulty in reaching high-quality, verified
+                        <li class="flex items-start gap-4 text-dutuk-charcoal/75 font-normal">
+                            <span class="text-red-500 mt-1 font-bold">•</span> Difficulty in reaching high-quality,
+                            verified
                             customers
                         </li>
                     </ul>
@@ -737,12 +1083,13 @@
                     class="font-display text-6xl md:text-8xl font-normal text-dutuk-charcoal mb-8 tracking-tighter italic">
                     Connection <br>Simplified.
                 </h2>
-                <div class="text-slate-400 text-lg md:text-xl font-light mb-12 space-y-4 italic max-w-2xl mx-auto">
+                <div
+                    class="text-dutuk-charcoal/65 text-lg md:text-xl font-normal mb-12 space-y-4 italic max-w-2xl mx-auto">
                     <p>The system is ready. The bridge is built. All you have to do is cross it.</p>
                 </div>
 
                 <div id="resolution-ctas" class="flex flex-col md:flex-row items-center justify-center gap-6">
-                    <a href="https://wa.me/91XXXXXXXXXX"
+                    <a href="https://wa.me/919XXXXXXXXX"
                         class="group relative px-12 py-6 bg-dutuk-charcoal text-white font-display font-medium text-xl rounded-full shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full md:w-auto">
                         <span class="relative z-10">WhatsApp Us</span>
                         <div
@@ -750,8 +1097,9 @@
                         </div>
                     </a>
 
-                    <a href="#"
-                        class="group relative px-10 py-6 bg-white border border-dutuk-charcoal/10 text-dutuk-charcoal font-display font-medium text-xl rounded-full shadow-ethereal hover:shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full md:w-auto flex items-center justify-center gap-3">
+                    <a href="#coming-soon" onclick="return false;"
+                        class="group relative px-10 py-6 bg-white border border-dutuk-charcoal/10 text-dutuk-charcoal font-display font-medium text-xl rounded-full shadow-ethereal hover:shadow-luxury hover:scale-105 transition-all duration-700 overflow-hidden w-full md:w-auto flex items-center justify-center gap-3 opacity-75 cursor-not-allowed">
+                        <span class="coming-soon-badge">Coming Soon</span>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                             class="group-hover:scale-110 transition-transform duration-500">
                             <path
@@ -786,7 +1134,7 @@
                     <img src="favicon.png" alt="Dutuk Logo" class="w-14 h-14 object-contain">
                     <span class="font-display font-bold text-4xl tracking-tighter">Dutuk</span>
                 </div>
-                <p class="text-2xl font-light text-slate-400 serif-italic">Connecting two worlds properly.</p>
+                <p class="text-2xl font-normal text-dutuk-charcoal/60 serif-italic">Connecting two worlds properly.</p>
             </div>
 
             <div class="flex flex-col md:items-end gap-10">
@@ -905,12 +1253,12 @@
                 { opacity: 0, x: isDesktop ? -50 : 0, y: isDesktop ? 0 : 30 },
                 { opacity: 1, x: 0, y: 0, duration: 1, ease: "power3.out" }, "-=0.85");
 
-        // Bridge: SVG draw
+        // Bridge: SVG draw — tightened durations so it completes quickly
         const bridgeSvgTl = gsap.timeline({ paused: true })
-            .to(".bridge-path", { strokeDashoffset: 0, duration: 1.8, ease: "power2.inOut" })
-            .to(".bridge-node", { opacity: 1, stagger: 0.3, duration: 0.6, ease: "back.out(1.5)" }, "-=0.8")
-            .to("#dutuk-link", { opacity: 1, scale: 1.2, duration: 0.8, ease: "back.out(2)" }, "-=0.3")
-            .to("#dutuk-label", { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.3");
+            .to(".bridge-path", { strokeDashoffset: 0, duration: 1.0, ease: "power2.inOut" })
+            .to(".bridge-node", { opacity: 1, stagger: 0.18, duration: 0.45, ease: "back.out(1.5)" }, "-=0.4")
+            .to("#dutuk-link", { opacity: 1, scale: 1.2, duration: 0.5, ease: "back.out(2)" }, "-=0.2")
+            .to("#dutuk-label", { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, "-=0.2");
 
         // HIW: heading + line
         const hiwLabelTl = gsap.timeline({ paused: true })
@@ -956,48 +1304,43 @@
         // ── SCROLL TRIGGERS — desktop: pin+snap+play/reverse | mobile: simple reveals ──
 
         if (isDesktop) {
-            // 3. CHAOS — pin + snap
+            // 3. CHAOS — pin only (no snap to avoid scroll-lock on reverse scroll)
             ScrollTrigger.create({
                 trigger: "#chaos-pin-container", ...scrollerOpts,
                 start: "top top", end: "bottom bottom",
-                pin: "#chaos-section", pinType: "transform",
-                snap: { snapTo: 1 / 3, duration: { min: 0.3, max: 0.6 }, delay: 0.05, ease: "power2.inOut" }
+                pin: "#chaos-section", pinType: "transform"
             });
             ScrollTrigger.create({
                 trigger: "#chaos-pin-container", ...scrollerOpts, start: "top 60%",
-                onEnter: () => { chaosTl.play(); gsap.to("#navbar", { autoAlpha: 0, y: -20, duration: 0.4 }); },
-                onLeaveBack: () => { chaosTl.reverse(); gsap.to("#navbar", { autoAlpha: 1, y: 0, duration: 0.4 }); }
-            });
-            ScrollTrigger.create({
-                trigger: "#chaos-pin-container", ...scrollerOpts, start: "bottom bottom",
-                onEnter: () => gsap.to("#navbar", { autoAlpha: 1, y: 0, duration: 0.4 }),
-                onLeaveBack: () => gsap.to("#navbar", { autoAlpha: 0, y: -20, duration: 0.4 })
+                onEnter: () => { chaosTl.play(); },
+                onLeaveBack: () => { chaosTl.reverse(); }
             });
 
-            // 4. BRIDGE — pin + snap
+            // 4. BRIDGE — pin only (no snap)
             ScrollTrigger.create({
                 trigger: "#bridge-pin-container", ...scrollerOpts,
                 start: "top top", end: "bottom bottom",
-                pin: "#bridge-section", pinType: "transform",
-                snap: { snapTo: 1 / 3, duration: { min: 0.3, max: 0.6 }, delay: 0.05, ease: "power2.inOut" }
+                pin: "#bridge-section", pinType: "transform"
             });
+            // Fire BOTH entry + SVG animations the moment bridge section enters viewport
             ScrollTrigger.create({
                 trigger: "#bridge-pin-container", ...scrollerOpts, start: "top 60%",
-                onEnter: () => bridgeEntryTl.play(),
-                onLeaveBack: () => bridgeEntryTl.reverse()
-            });
-            ScrollTrigger.create({
-                trigger: "#bridge-pin-container", ...scrollerOpts, start: "33% top",
-                onEnter: () => bridgeSvgTl.play(),
-                onLeave: () => gsap.to("#navbar", { autoAlpha: 1, y: 0, duration: 0.4 })
+                onEnter: () => {
+                    bridgeEntryTl.play();
+                    // Small delay so slide-in finishes before SVG starts drawing
+                    gsap.delayedCall(0.6, () => bridgeSvgTl.play());
+                },
+                onLeaveBack: () => {
+                    bridgeSvgTl.reverse();
+                    bridgeEntryTl.reverse();
+                }
             });
 
-            // 5. HOW IT WORKS — pin + snap
+            // 5. HOW IT WORKS — pin only (no snap)
             ScrollTrigger.create({
                 trigger: "#how-it-works", ...scrollerOpts,
                 start: "top top", end: "bottom bottom",
-                pin: "#hiw-sticky", pinType: "transform",
-                snap: { snapTo: 1 / 5, duration: { min: 0.3, max: 0.6 }, delay: 0.05, ease: "power2.inOut" }
+                pin: "#hiw-sticky", pinType: "transform"
             });
             ScrollTrigger.create({
                 trigger: "#how-it-works", ...scrollerOpts, start: "top 60%",
@@ -1098,13 +1441,101 @@
             y: 30, opacity: 0, duration: 1.2, stagger: 0.15, ease: "power3.out"
         });
 
-        // Navbar shadow
-        ScrollTrigger.create({
-            trigger: isDesktop ? SC : "body",
-            ...scrollerOpts,
-            start: "top -80",
-            onEnter: () => gsap.to("#navbar", { backgroundColor: "rgba(253,251,247,0.95)", boxShadow: "0 10px 40px -20px rgba(128,0,0,0.1)", duration: 0.5 }),
-            onLeaveBack: () => gsap.to("#navbar", { backgroundColor: isDesktop ? "rgba(253,251,247,0.8)" : "rgba(253,251,247,0.97)", boxShadow: "none", duration: 0.5 })
+        // Navbar scroll class toggle (CSS handles the frosted glass effect)
+        // ─── Shared scroll position helper (works with all Locomotive Scroll builds) ───
+        function getScrollY() {
+            if (locoScroll) {
+                try {
+                    // v4 Locomotive API
+                    return locoScroll.scroll.instance.scroll.y;
+                } catch (e) { }
+                try {
+                    // v5 API
+                    return locoScroll.lenisInstance ? locoScroll.lenisInstance.scroll : 0;
+                } catch (e) { }
+            }
+            return window.scrollY || document.documentElement.scrollTop || 0;
+        }
+
+        // ─── Helper: navigate to a section by ID ───
+        function navToSection(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (locoScroll) {
+                locoScroll.scrollTo(el, { offset: -60, duration: 1200 });
+            } else {
+                const top = el.getBoundingClientRect().top + window.scrollY - 80;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+        }
+
+        // ─── Nav link click delegation (data-nav-to attribute) ───
+        document.querySelectorAll('[data-nav-to]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-nav-to');
+                navToSection(targetId);
+                // Close mobile menu if open
+                hamburger && hamburger.classList.remove('open');
+                mobileMenu && mobileMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // ─── Navbar frosted glass on scroll ───
+        const navEl = document.getElementById('navbar');
+        function updateNavbar() {
+            if (getScrollY() > 60) {
+                navEl.classList.add('scrolled');
+            } else {
+                navEl.classList.remove('scrolled');
+            }
+        }
+        if (locoScroll) {
+            locoScroll.on('scroll', updateNavbar);
+        } else {
+            window.addEventListener('scroll', updateNavbar, { passive: true });
+        }
+        updateNavbar();
+
+        // ─── Hamburger / mobile menu ───
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+            // Close on WA link click (non-data-nav-to links)
+            mobileMenu.querySelectorAll('a:not([data-nav-to])').forEach(a => {
+                a.addEventListener('click', () => {
+                    hamburger.classList.remove('open');
+                    mobileMenu.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
+        // ─── Scroll-to-top button ───
+        const scrollTopBtn = document.getElementById('scroll-top-btn');
+        function updateScrollTopBtn() {
+            const y = getScrollY();
+            if (y > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        }
+        if (locoScroll) {
+            locoScroll.on('scroll', updateScrollTopBtn);
+        } else {
+            window.addEventListener('scroll', updateScrollTopBtn, { passive: true });
+        }
+        // Also poll once per second as a fallback for Locomotive Scroll builds that don't emit 'scroll' events reliably
+        setInterval(updateScrollTopBtn, 800);
+        scrollTopBtn.addEventListener('click', () => {
+            navToSection('hero-section');
         });
 
         // Final refresh — MUST be last
@@ -1115,6 +1546,14 @@
         }, 200);
 
     </script>
+    <!-- Scroll to top button -->
+    <button id="scroll-top-btn" aria-label="Back to top" title="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
 </body>
 
 </html>
