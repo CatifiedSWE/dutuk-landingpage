@@ -10,9 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-    rel="stylesheet" />
+
   <link rel="icon" href="favicon.png" type="image/png">
   <style type="text/tailwindcss">
     @layer base {
@@ -30,10 +28,11 @@
         .aurora-orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(140px);
-            opacity: 0.75;
+            filter: blur(80px);
+            opacity: 0.7;
             z-index: 0;
-            animation: blob-drift linear infinite alternate;
+            will-change: transform;
+            animation: blob-drift 30s linear infinite alternate;
         }
 
         @keyframes blob-drift {
@@ -49,42 +48,26 @@
             z-index: 1;
         }
 
-        .particle {
-            position: absolute;
-            background: rgba(128, 0, 0, 0.15); /* Soft Maroon */
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 2;
-            animation: float-ember linear infinite;
-        }
-
-        @keyframes float-ember {
-            0% { transform: translateY(0) translateX(0) opacity(0); }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(50px) opacity(0); }
-        }
-
         .noise::before {
             content: "";
             position: fixed;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.04;
+            background: repeating-conic-gradient(rgba(128, 0, 0, 0.02) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px;
             pointer-events: none;
             z-index: 3;
         }
 
         .premium-glass {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 
                 0 0 0 1px rgba(128, 0, 0, 0.03),
                 0 25px 60px -15px rgba(128, 0, 0, 0.1);
             position: relative;
             z-index: 10;
+            will-change: backdrop-filter;
         }
 
         @media (max-width: 768px) {
@@ -137,17 +120,14 @@
 <body class="aurora-bg text-slate-800 noise">
   <!-- Environment Layers -->
   <div class="grid-pattern"></div>
-  <div class="aurora-orb w-[900px] h-[900px] top-[-20%] left-[-20%]"
-    style="animation-duration: 25s; background: radial-gradient(circle at center, rgba(128, 0, 0, 0.6) 0%, rgba(128, 0, 0, 0) 70%);">
+  <div class="aurora-orb w-[600px] h-[600px] top-[-10%] left-[-15%]"
+    style="background: radial-gradient(circle at center, rgba(128, 0, 0, 0.5) 0%, rgba(128, 0, 0, 0) 70%);">
   </div>
-  <div class="aurora-orb w-[700px] h-[700px] bottom-[-10%] right-[-10%]"
-    style="animation-duration: 35s; animation-delay: -5s; background: radial-gradient(circle at center, rgba(255, 193, 7, 0.5) 0%, rgba(255, 193, 7, 0) 70%);">
-  </div>
-  <div class="aurora-orb w-[1000px] h-[1000px] top-[15%] right-[-25%]"
-    style="animation-duration: 40s; animation-delay: -15s; background: radial-gradient(circle at center, rgba(233, 30, 99, 0.5) 0%, rgba(233, 30, 99, 0) 70%);">
+  <div class="aurora-orb w-[500px] h-[500px] bottom-[-5%] right-[-10%]"
+    style="animation-delay: -10s; background: radial-gradient(circle at center, rgba(233, 30, 99, 0.4) 0%, rgba(233, 30, 99, 0) 70%);">
   </div>
 
-  <div id="particle-container"></div>
+
 
   <div class="relative z-10 min-h-screen flex flex-col items-center justify-center py-20">
     <main class="w-full max-w-lg px-6">
@@ -267,36 +247,13 @@
     </main>
 
     <script>
-      // Particle System
-      const container = document.getElementById('particle-container');
-      const particleCount = 15;
-
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-
-        const size = Math.random() * 6 + 2 + 'px';
-        particle.style.width = size;
-        particle.style.height = size;
-
-        particle.style.left = Math.random() * 100 + 'vw';
-        particle.style.top = Math.random() * 100 + 'vh';
-
-        const duration = Math.random() * 10 + 15 + 's';
-        const delay = Math.random() * -20 + 's';
-        particle.style.animationDuration = duration;
-        particle.style.animationDelay = delay;
-
-        container.appendChild(particle);
-      }
-
       // Entrance Animation
       gsap.to(".animate-reveal", {
         opacity: 1,
         y: 0,
-        duration: 1.5,
-        stagger: 0.2,
-        ease: "power4.out"
+        duration: 1,
+        stagger: 0.12,
+        ease: "power3.out"
       });
     </script>
 </body>
